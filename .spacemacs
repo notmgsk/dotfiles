@@ -136,8 +136,9 @@ values."
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
-   dotspacemacs-default-font '("Source Code Pro"
-                               :size 13
+   dotspacemacs-default-font '("Roboto Mono"
+
+                               :size 20
                                :weight normal
                                :width normal
                                :powerline-scale 1.1)
@@ -336,12 +337,17 @@ you should place your code here."
   (spacemacs/set-leader-keys-for-major-mode 'latex-mode "ib" 'latex-insert-block)
   (spacemacs/set-leader-keys-for-major-mode 'latex-mode "d" 'me/texcount-this-file)
 
-  (setq org-latex-create-formula-image-program 'dvisvgm)
+  (with-eval-after-load 'org
+    (setq org-latex-create-formula-image-program 'dvipng)
 
-  (setq org-directory "~/iCloudDrive/Documents/org")
-  (setq org-default-notes-file (concat org-directory "/notes.org"))
-  (setq org-drill-use-visible-cloze-face-p t)
-  (setq org-drill-cram-hours 0)
+    (setq org-directory "~/iCloudDrive/Documents/org")
+    (setq org-default-notes-file (concat org-directory "/notes.org")))
+  (with-eval-after-load 'org-drill
+    (setq org-drill-use-visible-cloze-face-p t)
+    (setq org-drill-cram-hours 0))
+
+  (global-set-key (kbd "C-w") 'backward-kill-word)
+  (global-set-key (kbd "C-\d") 'kill-region)
 
   )
 
@@ -350,6 +356,9 @@ you should place your code here."
   (setq mac-option-modifier 'nil)
   (setq mac-command-modifier 'meta)
   (global-set-key [kp-delete] 'delete-char) ;; sets fn-delete to be right-delete
+
+
+  (setq powerline-default-separator 'box)
 
 
   )
@@ -369,14 +378,11 @@ you should place your code here."
     ("bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" "a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" "b571f92c9bfaf4a28cb64ae4b4cdbda95241cd62cf07d942be44dc8f46c491f4" "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" "0f98f9c2f1241c3b6227af48dc96e708ec023dd68363edb5d36dc7beaad64c23" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "a8245b7cc985a0610d71f9852e9f2767ad1b852c2bdea6f4aadc12cce9c4d6d0" default)))
  '(default-frame-alist
     (quote
-     ((width . 147)
-      (height . 44)
-      (left . 72)
-      (top . 10)
-      (left-fringe . 1)
+     ((left-fringe . 1)
       (right-fringe . 1)
       (vertical-scroll-bars))))
  '(doc-view-resolution 200)
+ '(evil-want-Y-yank-to-eol nil)
  '(fill-column 90)
  '(matlab-indent-function-body 1)
  '(org-format-latex-options
@@ -388,7 +394,7 @@ you should place your code here."
     (org-bbdb org-bibtex org-docview org-gnus org-info org-irc org-mhe org-rmail org-w3m org-drill)))
  '(package-selected-packages
    (quote
-    (org-projectile org-present org-pomodoro alert log4e gntp org-download htmlize gnuplot yapfify ws-butler window-numbering which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spacemacs-theme spaceline smeargle restart-emacs rainbow-delimiters quelpa pyvenv pytest pyenv-mode py-isort popwin pip-requirements persp-mode pcre2el paradox orgit org-ref org-plus-contrib org-journal org-bullets open-junk-file neotree move-text mmm-mode markdown-toc magit-gitflow magit-gh-pulls macrostep lorem-ipsum live-py-mode linum-relative link-hint info+ indent-guide ido-vertical-mode hy-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-pydoc helm-projectile helm-mode-manager helm-make helm-gitignore helm-flx helm-descbinds helm-ag google-translate golden-ratio github-search github-clone github-browse-file gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gist gh-md flx-ido fill-column-indicator fancy-battery eyebrowse extempore-mode expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu elisp-slime-nav dumb-jump dired-narrow dired-k define-word cython-mode column-enforce-mode clean-aindent-mode auto-highlight-symbol auto-compile auctex anaconda-mode aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line)))
+    (winum powerline spinner pdf-tools key-chord ivy tablist markdown-mode hydra parent-mode projectile pkg-info epl request helm-bibtex parsebib gitignore-mode gh marshal logito pcache ht flx magit magit-popup git-commit with-editor smartparens iedit anzu evil goto-chg undo-tree highlight dired-hacks-utils diminish bind-map bind-key biblio biblio-core packed pythonic f dash s helm avy helm-core popup async org-projectile org-present org-pomodoro alert log4e gntp org-download htmlize gnuplot yapfify ws-butler window-numbering which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spacemacs-theme spaceline smeargle restart-emacs rainbow-delimiters quelpa pyvenv pytest pyenv-mode py-isort popwin pip-requirements persp-mode pcre2el paradox orgit org-ref org-plus-contrib org-journal org-bullets open-junk-file neotree move-text mmm-mode markdown-toc magit-gitflow magit-gh-pulls macrostep lorem-ipsum live-py-mode linum-relative link-hint info+ indent-guide ido-vertical-mode hy-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-pydoc helm-projectile helm-mode-manager helm-make helm-gitignore helm-flx helm-descbinds helm-ag google-translate golden-ratio github-search github-clone github-browse-file gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gist gh-md flx-ido fill-column-indicator fancy-battery eyebrowse extempore-mode expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu elisp-slime-nav dumb-jump dired-narrow dired-k define-word cython-mode column-enforce-mode clean-aindent-mode auto-highlight-symbol auto-compile auctex anaconda-mode aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line)))
  '(python-shell-interpreter "ipython" t)
  '(safe-local-variable-values (quote ((me/texcount-root-tex . clusters\.tex)))))
 
@@ -398,4 +404,5 @@ you should place your code here."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(org-level-1 ((t (:inherit bold :foreground "#4f97d7" :height 1.3)))))
+ '(org-level-1 ((t (:inherit bold :foreground "#4f97d7" :height 1.0))))
+ '(org-level-2 ((t (:inherit bold :foreground "#2d9574" :height 1.0)))))

@@ -31,6 +31,7 @@ values."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(
+     html
      python
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
@@ -47,6 +48,8 @@ values."
      bibtex
      (latex :variables latex-build-command "latexmk")
      org
+     ;; (mu4e :variables
+     ;;       mu4e-installation-path "/usr/share/emacs/site-lisp/mu4e")
      ;; (shell :variables
      ;;        shell-default-height 30
      ;;        shell-default-position 'bottom)
@@ -58,13 +61,17 @@ values."
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
-   dotspacemacs-additional-packages '(dired-narrow dired-k extempore-mode)
+   dotspacemacs-additional-packages
+   '(dired-narrow
+     dired-k
+     extempore-mode
+     helm-books)
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
    ;; A list of packages that will not be installed and loaded.
    dotspacemacs-excluded-packages '()
    ;; Defines the behaviour of Spacemacs when installing packages.
-   ;; Possible values are `used-only', `used-but-keep-unused' and `all'.
+   ;; Possible values are `used-only', `used-but-kep-unused' and `all'.
    ;; `used-only' installs only explicitly used packages and uninstall any
    ;; unused packages as well as their unused dependencies.
    ;; `used-but-keep-unused' installs only the used packages but won't uninstall
@@ -340,7 +347,7 @@ you should place your code here."
   (with-eval-after-load 'org
     (setq org-latex-create-formula-image-program 'dvipng)
 
-    (setq org-directory "~/iCloudDrive/Documents/org")
+    (setq org-directory "~/hackery/org")
     (setq org-default-notes-file (concat org-directory "/notes.org")))
   (with-eval-after-load 'org-drill
     (setq org-drill-use-visible-cloze-face-p t)
@@ -348,6 +355,69 @@ you should place your code here."
 
   (global-set-key (kbd "C-w") 'backward-kill-word)
   (global-set-key (kbd "C-\d") 'kill-region)
+
+  (add-to-list 'load-path "/usr/share/emacs/site-lisp/mu4e")
+  (require 'mu4e)
+  (require 'org-mu4e)
+  (setq mu4e-maildir "~/mail"
+        mu4e-trash-folder "/Trash"
+        mu4e-refile-folder "/Archive"
+        mu4e-get-mail-command "true"
+        mu4e-update-interval 900
+        mu4e-compose-signature-auto-include nil
+        mu4e-view-show-images t
+        mu4e-view-show-addresses t
+        mu4e-html2text-command "lynx -dump -stdin")
+  (add-to-list 'mu4e-view-actions '("ViewInBrowser" . mu4e-action-view-in-browser) t)
+  (setq org-mu4e-link-query-in-headers-mode nil)
+  (setq mu4e-sent-folder "/home/mgsk/mail/sent"
+        mu4e-drafts-folder "/home/mgsk/mail/drafts"
+        smtpmail-default-smtp-server "smtp.gmail.com"
+        smtpmail-smtp-server "smtp.gmail.com"
+        smtpmail-smtp-service 587
+        message-send-mail-function 'smtpmail-send-it)
+  (defvar my-mu4e-account-alist
+    '(("Gmail"
+       (mu4e-sent-folder "/gmail/sent")
+       (user-mail-address "markskilbeck@gmail.com")
+       (smtpmail-smtp-user "markskilbeck@gmail.com")
+       (smtp-local-domain "gmail.com")
+       (smtpmail-default-smtp-server "smtp.gmail.com")
+       (smtpmail-smtp-server "smtp.gmail.com")
+       (smtpmail-smtp-service 587))
+      ("Uni"
+       (mu4e-sent-folder "/gmail/sent")
+       (user-mail-address "markskilbeck@gmail.com")
+       (smtpmail-smtp-user "markskilbeck@gmail.com")
+       (smtp-local-domain "office365.com")
+       (smtpmail-default-smtp-server "smtp.office365.com")
+       (smtpmail-smtp-server "smtp.office365.com")
+       (smtpmail-smtp-service 587))))
+  (defun my-mu4e-set-account ()
+    "Set the account for composing a message.
+   This function is taken from: 
+     https://www.djcbsoftware.nl/code/mu/mu4e/Multiple-accounts.html"
+    (let* ((account
+            (if mu4e-compose-parent-message
+                (let ((maildir (mu4e-message-field mu4e-compose-parent-message :maildir)))
+                  (string-match "/\\(.*?\\)/" maildir)
+                  (match-string 1 maildir))
+              (completing-read (format "Compose with account: (%s) "
+                                       (mapconcat #'(lambda (var) (car var))
+                                                  my-mu4e-account-alist "/"))
+                               (mapcar #'(lambda (var) (car var)) my-mu4e-account-alist)
+                               nil t nil nil (caar my-mu4e-account-alist))))
+           (message "here!")
+           (account-vars (cdr (assoc account my-mu4e-account-alist))))
+      (if account-vars
+          (mapc #'(lambda (var)
+                    (set (car var) (cadr var)))
+                account-vars)
+        (error "No email account found"))))
+  (add-hook 'mu4e-compose-pre-hook #'my-mu4e-set-account)
+
+  (setq browse-url-browser-function 'browse-url-chrome)
+  (setq vc-follow-symlinks t)
 
   )
 
@@ -359,7 +429,6 @@ you should place your code here."
 
 
   (setq powerline-default-separator 'box)
-
 
   )
 
@@ -380,11 +449,13 @@ you should place your code here."
     (quote
      ((left-fringe . 1)
       (right-fringe . 1)
-      (vertical-scroll-bars))))
+      (vertical-scroll-bars)
+      (alpha . 95))))
  '(doc-view-resolution 200)
  '(evil-want-Y-yank-to-eol nil)
  '(fill-column 90)
  '(matlab-indent-function-body 1)
+ '(org-agenda-files (quote ("~/hackery/org/notes.org")))
  '(org-format-latex-options
    (quote
     (:foreground default :background default :scale 1.0 :html-foreground "Black" :html-background "Transparent" :html-scale 10.0 :matchers
@@ -394,7 +465,7 @@ you should place your code here."
     (org-bbdb org-bibtex org-docview org-gnus org-info org-irc org-mhe org-rmail org-w3m org-drill)))
  '(package-selected-packages
    (quote
-    (winum powerline spinner pdf-tools key-chord ivy tablist markdown-mode hydra parent-mode projectile pkg-info epl request helm-bibtex parsebib gitignore-mode gh marshal logito pcache ht flx magit magit-popup git-commit with-editor smartparens iedit anzu evil goto-chg undo-tree highlight dired-hacks-utils diminish bind-map bind-key biblio biblio-core packed pythonic f dash s helm avy helm-core popup async org-projectile org-present org-pomodoro alert log4e gntp org-download htmlize gnuplot yapfify ws-butler window-numbering which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spacemacs-theme spaceline smeargle restart-emacs rainbow-delimiters quelpa pyvenv pytest pyenv-mode py-isort popwin pip-requirements persp-mode pcre2el paradox orgit org-ref org-plus-contrib org-journal org-bullets open-junk-file neotree move-text mmm-mode markdown-toc magit-gitflow magit-gh-pulls macrostep lorem-ipsum live-py-mode linum-relative link-hint info+ indent-guide ido-vertical-mode hy-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-pydoc helm-projectile helm-mode-manager helm-make helm-gitignore helm-flx helm-descbinds helm-ag google-translate golden-ratio github-search github-clone github-browse-file gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gist gh-md flx-ido fill-column-indicator fancy-battery eyebrowse extempore-mode expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu elisp-slime-nav dumb-jump dired-narrow dired-k define-word cython-mode column-enforce-mode clean-aindent-mode auto-highlight-symbol auto-compile auctex anaconda-mode aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line)))
+    (helm-books web-mode tagedit slim-mode scss-mode sass-mode pug-mode less-css-mode helm-css-scss haml-mode emmet-mode mu4e-maildirs-extension mu4e-alert winum powerline spinner pdf-tools key-chord ivy tablist markdown-mode hydra parent-mode projectile pkg-info epl request helm-bibtex parsebib gitignore-mode gh marshal logito pcache ht flx magit magit-popup git-commit with-editor smartparens iedit anzu evil goto-chg undo-tree highlight dired-hacks-utils diminish bind-map bind-key biblio biblio-core packed pythonic f dash s helm avy helm-core popup async org-projectile org-present org-pomodoro alert log4e gntp org-download htmlize gnuplot yapfify ws-butler window-numbering which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spacemacs-theme spaceline smeargle restart-emacs rainbow-delimiters quelpa pyvenv pytest pyenv-mode py-isort popwin pip-requirements persp-mode pcre2el paradox orgit org-ref org-plus-contrib org-journal org-bullets open-junk-file neotree move-text mmm-mode markdown-toc magit-gitflow magit-gh-pulls macrostep lorem-ipsum live-py-mode linum-relative link-hint info+ indent-guide ido-vertical-mode hy-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-pydoc helm-projectile helm-mode-manager helm-make helm-gitignore helm-flx helm-descbinds helm-ag google-translate golden-ratio github-search github-clone github-browse-file gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gist gh-md flx-ido fill-column-indicator fancy-battery eyebrowse extempore-mode expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu elisp-slime-nav dumb-jump dired-narrow dired-k define-word cython-mode column-enforce-mode clean-aindent-mode auto-highlight-symbol auto-compile auctex anaconda-mode aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line)))
  '(python-shell-interpreter "ipython" t)
  '(safe-local-variable-values (quote ((me/texcount-root-tex . clusters\.tex)))))
 
@@ -405,4 +476,5 @@ you should place your code here."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(org-level-1 ((t (:inherit bold :foreground "#4f97d7" :height 1.0))))
- '(org-level-2 ((t (:inherit bold :foreground "#2d9574" :height 1.0)))))
+ '(org-level-2 ((t (:inherit bold :foreground "#2d9574" :height 1.0))))
+ '(org-level-3 ((t (:foreground "#67b11d" :weight normal :height 1.0)))))

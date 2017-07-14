@@ -348,7 +348,16 @@ you should place your code here."
     (setq org-latex-create-formula-image-program 'dvipng)
 
     (setq org-directory "~/hackery/org")
-    (setq org-default-notes-file (concat org-directory "/notes.org")))
+    (setq org-default-notes-file (concat org-directory "/notes.org"))
+    (setq org-capture-templates
+          '(("t" "Brief todo" entry (file+headline org-default-notes-file "Tasks")
+             "* TODO %?\n  %i\n")
+            ("T" "Todo" entry (file+headline org-default-notes-file "Tasks")
+             "* TODO %?\n %i\n %a")
+            ;; ("j" "Journal" entry (file+datetree "~/org/journal.org")
+            ;;  "* %?\nEntered on %U\n  %i\n  %a")
+            )))
+  
   (with-eval-after-load 'org-drill
     (setq org-drill-use-visible-cloze-face-p t)
     (setq org-drill-cram-hours 0))
@@ -478,3 +487,4 @@ you should place your code here."
  '(org-level-1 ((t (:inherit bold :foreground "#4f97d7" :height 1.0))))
  '(org-level-2 ((t (:inherit bold :foreground "#2d9574" :height 1.0))))
  '(org-level-3 ((t (:foreground "#67b11d" :weight normal :height 1.0)))))
+ '(org-agenda-done ((t (:foreground "#86dc2f" :height 1.0))))

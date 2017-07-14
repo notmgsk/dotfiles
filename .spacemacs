@@ -338,10 +338,20 @@ you should place your code here."
 
   (setq org-latex-create-formula-image-program 'dvisvgm)
 
-  (setq org-directory "~/iCloudDrive/Documents/org")
+  (setq org-directory "~/hackery/org")
   (setq org-default-notes-file (concat org-directory "/notes.org"))
   (setq org-drill-use-visible-cloze-face-p t)
   (setq org-drill-cram-hours 0)
+  (global-set-key (kbd "C-c M-o") 'org-iswitchb)
+
+  (setq org-capture-templates
+        '(("t" "Brief todo" entry (file+headline org-default-notes-file "Tasks")
+           "* TODO %?\n  %i\n")
+          ("T" "Todo" entry (file+headline org-default-notes-file "Tasks")
+           "* TODO %?\n %i\n %a")
+          ;; ("j" "Journal" entry (file+datetree "~/org/journal.org")
+          ;;  "* %?\nEntered on %U\n  %i\n  %a")
+          ))
 
   )
 
@@ -379,6 +389,7 @@ you should place your code here."
  '(doc-view-resolution 200)
  '(fill-column 90)
  '(matlab-indent-function-body 1)
+ '(org-agenda-files (quote ("~/hackery/org/notes.org")))
  '(org-format-latex-options
    (quote
     (:foreground default :background default :scale 1.0 :html-foreground "Black" :html-background "Transparent" :html-scale 10.0 :matchers
@@ -398,4 +409,5 @@ you should place your code here."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(org-agenda-done ((t (:foreground "#86dc2f" :height 1.0))))
  '(org-level-1 ((t (:inherit bold :foreground "#4f97d7" :height 1.3)))))

@@ -65,13 +65,14 @@ values."
    '(dired-narrow
      dired-k
      extempore-mode
-     helm-books)
+     helm-books
+     org-cliplink)
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
    ;; A list of packages that will not be installed and loaded.
    dotspacemacs-excluded-packages '()
    ;; Defines the behaviour of Spacemacs when installing packages.
-   ;; Possible values are `used-only', `used-but-kep-unused' and `all'.
+   ;; Possible values are `used-only', `used-but-keep-unused' and `all'.
    ;; `used-only' installs only explicitly used packages and uninstall any
    ;; unused packages as well as their unused dependencies.
    ;; `used-but-keep-unused' installs only the used packages but won't uninstall
@@ -143,12 +144,7 @@ values."
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
-   dotspacemacs-default-font '("Roboto Mono"
-
-                               :size 20
-                               :weight normal
-                               :width normal
-                               :powerline-scale 1.1)
+   dotspacemacs-default-font '()
    ;; The leader key
    dotspacemacs-leader-key "SPC"
    ;; The key used for Emacs commands (M-x) (after pressing on the leader key).
@@ -345,7 +341,11 @@ you should place your code here."
   (spacemacs/set-leader-keys-for-major-mode 'latex-mode "d" 'me/texcount-this-file)
 
   (with-eval-after-load 'org
-    (setq org-latex-create-formula-image-program 'dvipng)
+    (cond
+     ((string-equal system-type "darwin")
+      (setq org-latex-create-formula-image-program 'dvisvgm))
+     (t
+      (setq org-latex-create-formula-image-program 'dvipng)))
 
     (setq org-directory "~/hackery/org")
     (setq org-default-notes-file (concat org-directory "/notes.org"))
@@ -356,77 +356,85 @@ you should place your code here."
              "* TODO %?\n %i\n %a")
             ;; ("j" "Journal" entry (file+datetree "~/org/journal.org")
             ;;  "* %?\nEntered on %U\n  %i\n  %a")
-            )))
+            ))
+
+    (add-hook 'org-mode-hook 'org-display-outline-path)
+    (global-set-key (kbd "C-c M-o") 'org-iswitchb))
   
   (with-eval-after-load 'org-drill
     (setq org-drill-use-visible-cloze-face-p t)
     (setq org-drill-cram-hours 0))
 
-  (global-set-key (kbd "C-w") 'backward-kill-word)
-  (global-set-key (kbd "C-\d") 'kill-region)
+  (if (string-equal system-type "gnu/linux")
+      (progn
+        (global-set-key (kbd "C-w") 'backward-kill-word)
+        (global-set-key (kbd "C-\d") 'kill-region)
 
-  (add-to-list 'load-path "/usr/share/emacs/site-lisp/mu4e")
-  (require 'mu4e)
-  (require 'org-mu4e)
-  (setq mu4e-maildir "~/mail"
-        mu4e-trash-folder "/Trash"
-        mu4e-refile-folder "/Archive"
-        mu4e-get-mail-command "true"
-        mu4e-update-interval 900
-        mu4e-compose-signature-auto-include nil
-        mu4e-view-show-images t
-        mu4e-view-show-addresses t
-        mu4e-html2text-command "lynx -dump -stdin")
-  (add-to-list 'mu4e-view-actions '("ViewInBrowser" . mu4e-action-view-in-browser) t)
-  (setq org-mu4e-link-query-in-headers-mode nil)
-  (setq mu4e-sent-folder "/home/mgsk/mail/sent"
-        mu4e-drafts-folder "/home/mgsk/mail/drafts"
-        smtpmail-default-smtp-server "smtp.gmail.com"
-        smtpmail-smtp-server "smtp.gmail.com"
-        smtpmail-smtp-service 587
-        message-send-mail-function 'smtpmail-send-it)
-  (defvar my-mu4e-account-alist
-    '(("Gmail"
-       (mu4e-sent-folder "/gmail/sent")
-       (user-mail-address "markskilbeck@gmail.com")
-       (smtpmail-smtp-user "markskilbeck@gmail.com")
-       (smtp-local-domain "gmail.com")
-       (smtpmail-default-smtp-server "smtp.gmail.com")
-       (smtpmail-smtp-server "smtp.gmail.com")
-       (smtpmail-smtp-service 587))
-      ("Uni"
-       (mu4e-sent-folder "/gmail/sent")
-       (user-mail-address "markskilbeck@gmail.com")
-       (smtpmail-smtp-user "markskilbeck@gmail.com")
-       (smtp-local-domain "office365.com")
-       (smtpmail-default-smtp-server "smtp.office365.com")
-       (smtpmail-smtp-server "smtp.office365.com")
-       (smtpmail-smtp-service 587))))
-  (defun my-mu4e-set-account ()
-    "Set the account for composing a message.
+        (add-to-list 'load-path "/usr/share/emacs/site-lisp/mu4e")
+        (require 'mu4e)
+        (require 'org-mu4e)
+        (setq mu4e-maildir "~/mail"
+              mu4e-trash-folder "/Trash"
+              mu4e-refile-folder "/Archive"
+              mu4e-get-mail-command "true"
+              mu4e-update-interval 900
+              mu4e-compose-signature-auto-include nil
+              mu4e-view-show-images t
+              mu4e-view-show-addresses t
+              mu4e-html2text-command "lynx -dump -stdin")
+        (add-to-list 'mu4e-view-actions '("ViewInBrowser" . mu4e-action-view-in-browser) t)
+        (setq org-mu4e-link-query-in-headers-mode nil)
+        (setq mu4e-sent-folder "/home/mgsk/mail/sent"
+              mu4e-drafts-folder "/home/mgsk/mail/drafts"
+              smtpmail-default-smtp-server "smtp.gmail.com"
+              smtpmail-smtp-server "smtp.gmail.com"
+              smtpmail-smtp-service 587
+              message-send-mail-function 'smtpmail-send-it)
+        (defvar my-mu4e-account-alist
+          '(("Gmail"
+             (mu4e-sent-folder "/gmail/sent")
+             (user-mail-address "markskilbeck@gmail.com")
+             (smtpmail-smtp-user "markskilbeck@gmail.com")
+             (smtp-local-domain "gmail.com")
+             (smtpmail-default-smtp-server "smtp.gmail.com")
+             (smtpmail-smtp-server "smtp.gmail.com")
+             (smtpmail-smtp-service 587))
+            ("Uni"
+             (mu4e-sent-folder "/gmail/sent")
+             (user-mail-address "markskilbeck@gmail.com")
+             (smtpmail-smtp-user "markskilbeck@gmail.com")
+             (smtp-local-domain "office365.com")
+             (smtpmail-default-smtp-server "smtp.office365.com")
+             (smtpmail-smtp-server "smtp.office365.com")
+             (smtpmail-smtp-service 587))))
+        (defun my-mu4e-set-account ()
+          "Set the account for composing a message.
    This function is taken from: 
      https://www.djcbsoftware.nl/code/mu/mu4e/Multiple-accounts.html"
-    (let* ((account
-            (if mu4e-compose-parent-message
-                (let ((maildir (mu4e-message-field mu4e-compose-parent-message :maildir)))
-                  (string-match "/\\(.*?\\)/" maildir)
-                  (match-string 1 maildir))
-              (completing-read (format "Compose with account: (%s) "
-                                       (mapconcat #'(lambda (var) (car var))
-                                                  my-mu4e-account-alist "/"))
-                               (mapcar #'(lambda (var) (car var)) my-mu4e-account-alist)
-                               nil t nil nil (caar my-mu4e-account-alist))))
-           (message "here!")
-           (account-vars (cdr (assoc account my-mu4e-account-alist))))
-      (if account-vars
-          (mapc #'(lambda (var)
-                    (set (car var) (cadr var)))
-                account-vars)
-        (error "No email account found"))))
-  (add-hook 'mu4e-compose-pre-hook #'my-mu4e-set-account)
+          (let* ((account
+                  (if mu4e-compose-parent-message
+                      (let ((maildir (mu4e-message-field mu4e-compose-parent-message :maildir)))
+                        (string-match "/\\(.*?\\)/" maildir)
+                        (match-string 1 maildir))
+                    (completing-read (format "Compose with account: (%s) "
+                                             (mapconcat #'(lambda (var) (car var))
+                                                        my-mu4e-account-alist "/"))
+                                     (mapcar #'(lambda (var) (car var)) my-mu4e-account-alist)
+                                     nil t nil nil (caar my-mu4e-account-alist))))
+                 (message "here!")
+                 (account-vars (cdr (assoc account my-mu4e-account-alist))))
+            (if account-vars
+                (mapc #'(lambda (var)
+                          (set (car var) (cadr var)))
+                      account-vars)
+              (error "No email account found"))))
+        (add-hook 'mu4e-compose-pre-hook #'my-mu4e-set-account)))
 
   (setq browse-url-browser-function 'browse-url-chrome)
   (setq vc-follow-symlinks t)
+
+  (setq custom-file "~/.spacemacs_custom")
+  (load custom-file)
 
   )
 

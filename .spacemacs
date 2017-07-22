@@ -33,7 +33,8 @@ values."
    '(
      shell-scripts
      html
-     ;;python
+     python
+     syntax-checking
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
@@ -68,7 +69,8 @@ values."
      extempore-mode
      helm-books
      org-cliplink
-     python-mode)
+     ;; python-mode
+     )
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
    ;; A list of packages that will not be installed and loaded.

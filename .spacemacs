@@ -328,7 +328,7 @@ you should place your code here."
     (setq dired-k-human-readable +1)
     (setq dired-k-style nil)
     (define-key dired-mode-map (kbd "K") 'dired-k))
-  
+
   (setq me/texcount-command "texcount -sum -brief -merge %s")
   (setq me/texcount-root-tex nil)
   (defun me/texcount-this-file ()
@@ -364,7 +364,7 @@ you should place your code here."
 
     (add-hook 'org-mode-hook 'org-display-outline-path)
     (global-set-key (kbd "C-c M-o") 'org-iswitchb))
-  
+
   (with-eval-after-load 'org-drill
     (setq org-drill-use-visible-cloze-face-p t)
     (setq org-drill-cram-hours 0))
@@ -394,38 +394,37 @@ you should place your code here."
               smtpmail-smtp-server "smtp.gmail.com"
               smtpmail-smtp-service 587
               message-send-mail-function 'smtpmail-send-it)
-        (defvar my-mu4e-account-alist
-          '(("Gmail"
-             (mu4e-sent-folder "/gmail/sent")
+        (setq my-mu4e-account-alist
+          '(("gmail"
+             (mu4e-sent-folder "/uni/sent")
              (user-mail-address "markskilbeck@gmail.com")
              (smtpmail-smtp-user "markskilbeck@gmail.com")
              (smtp-local-domain "gmail.com")
              (smtpmail-default-smtp-server "smtp.gmail.com")
              (smtpmail-smtp-server "smtp.gmail.com")
              (smtpmail-smtp-service 587))
-            ("Uni"
+            ("uni"
              (mu4e-sent-folder "/gmail/sent")
-             (user-mail-address "markskilbeck@gmail.com")
-             (smtpmail-smtp-user "markskilbeck@gmail.com")
+             (user-mail-address "ppyms3@nottingham.ac.uk")
+             (smtpmail-smtp-user "ppyms3@nottingham.ac.uk")
              (smtp-local-domain "office365.com")
              (smtpmail-default-smtp-server "smtp.office365.com")
              (smtpmail-smtp-server "smtp.office365.com")
              (smtpmail-smtp-service 587))))
         (defun my-mu4e-set-account ()
           "Set the account for composing a message.
-   This function is taken from: 
+   This function is taken from:
      https://www.djcbsoftware.nl/code/mu/mu4e/Multiple-accounts.html"
           (let* ((account
                   (if mu4e-compose-parent-message
                       (let ((maildir (mu4e-message-field mu4e-compose-parent-message :maildir)))
-                        (string-match "/\\(.*?\\)/" maildir)
+                        (string-match "/\\(.*?\\)$" maildir)
                         (match-string 1 maildir))
                     (completing-read (format "Compose with account: (%s) "
                                              (mapconcat #'(lambda (var) (car var))
                                                         my-mu4e-account-alist "/"))
                                      (mapcar #'(lambda (var) (car var)) my-mu4e-account-alist)
                                      nil t nil nil (caar my-mu4e-account-alist))))
-                 (message "here!")
                  (account-vars (cdr (assoc account my-mu4e-account-alist))))
             (if account-vars
                 (mapc #'(lambda (var)

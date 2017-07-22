@@ -404,7 +404,7 @@ you should place your code here."
              (smtpmail-smtp-server "smtp.gmail.com")
              (smtpmail-smtp-service 587))
             ("uni"
-             (mu4e-sent-folder "/gmail/sent")
+             (mu4e-sent-folder "/uni/sent")
              (user-mail-address "ppyms3@nottingham.ac.uk")
              (smtpmail-smtp-user "ppyms3@nottingham.ac.uk")
              (smtp-local-domain "office365.com")

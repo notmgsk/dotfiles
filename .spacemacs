@@ -362,8 +362,10 @@ you should place your code here."
             ;;  "* %?\nEntered on %U\n  %i\n  %a")
             ))
 
-    (add-hook 'org-mode-hook 'org-display-outline-path)
-    (global-set-key (kbd "C-c M-o") 'org-iswitchb))
+    ;;(add-hook 'org-mode-hook 'org-display-outline-path)
+    (global-set-key (kbd "C-c M-o") 'org-iswitchb)
+    ;;(setq header-line-format '(:eval (org-display-outline-path nil t))))
+    )
 
   (with-eval-after-load 'org-drill
     (setq org-drill-use-visible-cloze-face-p t)

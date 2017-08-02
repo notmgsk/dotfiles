@@ -396,7 +396,7 @@ you should place your code here."
               message-send-mail-function 'smtpmail-send-it)
         (setq my-mu4e-account-alist
           '(("gmail"
-             (mu4e-sent-folder "/uni/sent")
+             (mu4e-sent-folder "/gmail/sent")
              (user-mail-address "markskilbeck@gmail.com")
              (smtpmail-smtp-user "markskilbeck@gmail.com")
              (smtp-local-domain "gmail.com")
@@ -405,8 +405,8 @@ you should place your code here."
              (smtpmail-smtp-service 587))
             ("uni"
              (mu4e-sent-folder "/uni/sent")
-             (user-mail-address "ppyms3@nottingham.ac.uk")
-             (smtpmail-smtp-user "ppyms3@nottingham.ac.uk")
+             (user-mail-address "ppyms3@exmail.nottingham.ac.uk")
+             (smtpmail-smtp-user "ppyms3@ad.nottingham.ac.uk")
              (smtp-local-domain "office365.com")
              (smtpmail-default-smtp-server "smtp.office365.com")
              (smtpmail-smtp-server "smtp.office365.com")

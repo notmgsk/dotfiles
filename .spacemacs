@@ -438,6 +438,14 @@ you should place your code here."
   (setq browse-url-browser-function 'browse-url-chrome)
   (setq vc-follow-symlinks t)
 
+  (defun backward-kill-word-or-region (arg)
+    (interactive "P")
+    (if (region-active-p)
+        (kill-region (region-beginning)
+                     (region-end))
+      (backward-kill-word (or arg 1))))
+  (global-set-key (kbd "C-w") 'backward-kill-word-or-region)
+
   (setq custom-file "~/.spacemacs_custom")
   (load custom-file)
 

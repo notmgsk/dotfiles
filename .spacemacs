@@ -383,11 +383,12 @@ you should place your code here."
               mu4e-trash-folder "/Trash"
               mu4e-refile-folder "/Archive"
               mu4e-get-mail-command "true"
-              mu4e-update-interval 900
+              mu4e-update-interval 300
               mu4e-compose-signature-auto-include nil
               mu4e-view-show-images t
               mu4e-view-show-addresses t
-              mu4e-html2text-command "lynx -dump -stdin")
+              mu4e-view-prefer-html t
+              mu4e-html2text-command "elinks -dump -dump-width 100")
         (add-to-list 'mu4e-view-actions '("ViewInBrowser" . mu4e-action-view-in-browser) t)
         (setq org-mu4e-link-query-in-headers-mode nil)
         (setq mu4e-sent-folder "/home/mgsk/mail/sent"

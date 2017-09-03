@@ -69,6 +69,7 @@ values."
      extempore-mode
      helm-books
      org-cliplink
+     ;; el-pocket
      ;; python-mode
      )
    ;; A list of packages that cannot be updated.
@@ -376,8 +377,9 @@ you should place your code here."
         (global-set-key (kbd "C-w") 'backward-kill-word)
         (global-set-key (kbd "C-\d") 'kill-region)
 
-        (add-to-list 'load-path "/usr/share/emacs/site-lisp/mu4e")
+        (add-to-list 'load-path "/usr/local/share/emacs/site-lisp/mu4e")
         (require 'mu4e)
+        (require 'mu4e-contrib)
         (require 'org-mu4e)
         (setq mu4e-maildir "~/mail"
               mu4e-trash-folder "/Trash"
@@ -388,11 +390,17 @@ you should place your code here."
               mu4e-view-show-images t
               mu4e-view-show-addresses t
               mu4e-view-prefer-html t
-              mu4e-html2text-command "elinks -dump -dump-width 100")
+              ;; mu4e-html2text-command "elinks -dump -dump-width 100"
+              ;; mu4e-html2text-command "html2markdown"
+              mu4e-html2text-command 'mu4e-shr2text
+              shr-color-visible-luminance-min 60
+              shr-color-visible-distance-min 5
+              )
+        (advice-add #'shr-colorize-region :around (defun shr-no-colourise-region (&rest ignore)))
         (add-to-list 'mu4e-view-actions '("ViewInBrowser" . mu4e-action-view-in-browser) t)
         (setq org-mu4e-link-query-in-headers-mode nil)
-        (setq mu4e-sent-folder "/home/mgsk/mail/sent"
-              mu4e-drafts-folder "/home/mgsk/mail/drafts"
+        (setq mu4e-sent-folder "/sent"
+              mu4e-drafts-folder "/drafts"
               smtpmail-default-smtp-server "smtp.gmail.com"
               smtpmail-smtp-server "smtp.gmail.com"
               smtpmail-smtp-service 587

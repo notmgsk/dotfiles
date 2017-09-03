@@ -1,16 +1,5 @@
 #! /bin/sh
 
-# for some reason lightdm (?) is turning on numlock when I log in
-numlockx off
-sxhkd &
-polybar example 2>/dev/null &
-feh --bg-fill ~/Pictures/outrun4k.jpg
-compton 2>/dev/null &
-emacs --daemon=mail
-emacs --daemon
-getmail --rcfile=~/.getmail/getgmailrc &
-getmail --rcfile=~/.getmail/getunirc &
-
 bspc config focus_follows_pointer true
 
 bspc monitor -d genrl hackr email chati
@@ -24,7 +13,7 @@ bspc config normal_border_color     '#000000'
 bspc config presel_border_color     '#31aeff'
 bspc config urgent_border_color     '#ff9e24'
 
-bspc config split_ratio          0.52
+bspc config split_ratio          0.5
 bspc config borderless_monocle   true
 bspc config gapless_monocle      true
 
@@ -35,8 +24,16 @@ bspc rule -a Kupfer.py focus=on
 bspc rule -a Screenkey manage=off
 bspc rule -a Emacs state=tiled
 
-## Start-up apps in specific workspaces
-# In workspace 1 (genrl), have web-browser.
-
+# for some reason lightdm (?) is turning on numlock when I log in
+numlockx off
+sxhkd &
+polybar example 2>/dev/null &
+feh --bg-fill ~/Pictures/outrun4k.jpg
+compton 2>/dev/null &
+redshift &
+emacs --daemon=mail
+emacs --daemon
+getmail --rcfile=~/.getmail/getgmailrc &
+getmail --rcfile=~/.getmail/getunirc &
 
 

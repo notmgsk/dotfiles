@@ -35,5 +35,5 @@ emacs --daemon=mail
 emacs --daemon
 getmail --rcfile=~/.getmail/getgmailrc &
 getmail --rcfile=~/.getmail/getunirc &
-
+caffeine &
 

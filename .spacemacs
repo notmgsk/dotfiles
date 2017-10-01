@@ -58,6 +58,7 @@ values."
      ;; spell-checking
      ;; syntax-checking
      ;; version-control
+     common-lisp
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -457,6 +458,9 @@ you should place your code here."
 
   (setq custom-file "~/.spacemacs_custom")
   (load custom-file)
+
+
+  (load (expand-file-name "~/.quicklisp/slime-helper.el"))
 
   )
 

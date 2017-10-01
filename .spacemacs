@@ -72,6 +72,7 @@ values."
      org-cliplink
      ;; el-pocket
      ;; python-mode
+     dired-details
      )
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -458,6 +459,13 @@ you should place your code here."
 
   (setq custom-file "~/.spacemacs_custom")
   (load custom-file)
+
+  (require 'helm-bookmark)
+
+  ;; As per emacs rocks episode 16
+  (require 'dired-details)
+  (setq-default dired-details-hidden-string "--- ")
+  (dired-details-install)
 
   (setq powerline-default-separator nil)
 

@@ -459,6 +459,7 @@ you should place your code here."
   (setq custom-file "~/.spacemacs_custom")
   (load custom-file)
 
+  (setq powerline-default-separator nil)
 
   (load (expand-file-name "~/.quicklisp/slime-helper.el"))
 

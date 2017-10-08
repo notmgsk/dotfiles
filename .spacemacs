@@ -58,6 +58,7 @@ values."
      ;; spell-checking
      ;; syntax-checking
      ;; version-control
+     common-lisp
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -74,6 +75,7 @@ values."
      web
      ;; el-pocket
      ;; python-mode
+     dired-details
      )
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -152,7 +154,7 @@ values."
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
-   dotspacemacs-default-font '()
+   dotspacemacs-default-font '("Iosevka:pixelsize=14:weight=light:slant=normal:width=normal:spacing=100:scalable=true")
    ;; The leader key
    dotspacemacs-leader-key "SPC"
    ;; The key used for Emacs commands (M-x) (after pressing on the leader key).
@@ -469,6 +471,17 @@ is not the only window visible."
 
   (setq custom-file "~/.spacemacs_custom")
   (load custom-file)
+
+  (require 'helm-bookmark)
+
+  ;; As per emacs rocks episode 16
+  (require 'dired-details)
+  (setq-default dired-details-hidden-string "--- ")
+  (dired-details-install)
+
+  (setq powerline-default-separator nil)
+
+  (load (expand-file-name "~/.quicklisp/slime-helper.el"))
 
   )
 

@@ -69,6 +69,9 @@ values."
      extempore-mode
      helm-books
      org-cliplink
+     visual-fill-column
+     beginend
+     web
      ;; el-pocket
      ;; python-mode
      )
@@ -313,9 +316,13 @@ This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
   (setq-default spacemacs-show-trailing-whitespace nil)
-  ;; (evil-leader/set-key-for-mode )
 
   (defun me/resize-window-to-fill-column ()
+    "Resize the current window to have width `fill-column'.
+If current window has width lesser/greater than `fill-column',
+this function reduces/increases the window width to show filled
+content. Only takes effect is the window can be resized; i.e., it
+is not the only window visible."
     (interactive)
     (let* ((current (window-width (selected-window)))
            (desired fill-column)
@@ -325,6 +332,7 @@ you should place your code here."
 
   (with-eval-after-load 'dired
     (define-key dired-mode-map (kbd "/") 'dired-narrow)
+    (define-key dired-mode-map (kbd "e") 'wdired-change-to-wdired-mode)
     (setq dired-listing-switches "-alh")
     (setq dired-k-human-readable +1)
     (setq dired-k-style nil)
@@ -442,9 +450,11 @@ you should place your code here."
                           (set (car var) (cadr var)))
                       account-vars)
               (error "No email account found"))))
-        (add-hook 'mu4e-compose-pre-hook #'my-mu4e-set-account)))
+        (add-hook 'mu4e-compose-pre-hook #'my-mu4e-set-account)
+        (add-hook 'mu4e-view-mode-hook 'visual-line-mode)
+        (add-hook 'visual-line-mode-hook 'visual-fill-column-mode)))
 
-  (setq browse-url-browser-function 'browse-url-chrome)
+  (setq browse-url-browser-function 'browse-url-firefox)
   (setq vc-follow-symlinks t)
 
   (defun backward-kill-word-or-region (arg)
@@ -454,6 +464,8 @@ you should place your code here."
                      (region-end))
       (backward-kill-word (or arg 1))))
   (global-set-key (kbd "C-w") 'backward-kill-word-or-region)
+
+  (beginend-global-mode)
 
   (setq custom-file "~/.spacemacs_custom")
   (load custom-file)

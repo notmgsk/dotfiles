@@ -382,7 +382,7 @@ is not the only window visible."
     (setq org-drill-use-visible-cloze-face-p t)
     (setq org-drill-cram-hours 0))
 
-  (if (string-equal system-type "gnu/linux")
+  (when (string-equal system-type "gnu/linux")
       (progn
         (global-set-key (kbd "C-w") 'backward-kill-word)
         (global-set-key (kbd "C-\d") 'kill-region)

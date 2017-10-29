@@ -489,7 +489,7 @@ is not the only window visible."
 
   ;; (load (expand-file-name "~/.quicklisp/slime-helper.el"))
 
-  (set-fringe-style 14)
+  (fringe-mode 14)
 
   )
 

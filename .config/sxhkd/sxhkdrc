@@ -4,11 +4,17 @@
 
 # terminal emulator
 super + Return
-        gnome-terminal	
+        gnome-terminal
 
 # program launcher
-super + @space
+super + space
 	rofi -combi-modi window,run -show combi
+
+F2
+  emacsclient -c
+
+super + f
+  firefox
 
 # make sxhkd reload its configuration files:
 super + Escape
@@ -72,7 +78,11 @@ super + bracket{left,right}
 
 # focus the last node/desktop
 super + {grave,Tab}
-	bspc {node,desktop} -f last
+	bspc {node,desktop} -f last 
+
+alt + Tab
+	bspc node -f last
+
 
 # focus the older or newer node in the focus history
 super + {o,i}
@@ -103,6 +113,10 @@ super + ctrl + space
 # cancel the preselection for the focused desktop
 super + ctrl + shift + space
 	bspc query -N -d | xargs -I id -n 1 bspc node id -p cancel
+
+# Move to the preselection
+super + shift + y
+  bspc node -n 'last.!automatic'
 
 #
 # move/resize

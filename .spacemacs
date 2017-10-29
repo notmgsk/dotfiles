@@ -58,7 +58,7 @@ values."
      ;; spell-checking
      ;; syntax-checking
      ;; version-control
-     common-lisp
+     ;; common-lisp
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -76,6 +76,8 @@ values."
      ;; el-pocket
      ;; python-mode
      dired-details
+     centered-window-mode
+     rainbow-mode
      )
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -154,7 +156,8 @@ values."
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
-   dotspacemacs-default-font '("Iosevka:pixelsize=14:weight=light:slant=normal:width=normal:spacing=100:scalable=true")
+   dotspacemacs-default-font '("Roboto Mono:pixelsize=18:foundry=pyrs:weight=light:slant=normal:width=normal:scalable=true")
+   ;; dotspacemacs-default-font '("Iosevka:pixelsize=22:foundry=CYEL:weight=light:slant=normal:width=normal:spacing=90:scalable=true")
    ;; The leader key
    dotspacemacs-leader-key "SPC"
    ;; The key used for Emacs commands (M-x) (after pressing on the leader key).
@@ -469,6 +472,9 @@ is not the only window visible."
 
   (beginend-global-mode)
 
+  (add-to-list 'load-path "~/hackery/other/el-pocket")
+  (require 'el-pocket)
+
   (setq custom-file "~/.spacemacs_custom")
   (load custom-file)
 
@@ -481,7 +487,9 @@ is not the only window visible."
 
   (setq powerline-default-separator nil)
 
-  (load (expand-file-name "~/.quicklisp/slime-helper.el"))
+  ;; (load (expand-file-name "~/.quicklisp/slime-helper.el"))
+
+  (set-fringe-style 14)
 
   )
 

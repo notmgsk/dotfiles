@@ -58,7 +58,7 @@ values."
      ;; spell-checking
      ;; syntax-checking
      ;; version-control
-     common-lisp
+     ;; common-lisp
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -70,9 +70,14 @@ values."
      extempore-mode
      helm-books
      org-cliplink
+     visual-fill-column
+     beginend
+     web
      ;; el-pocket
      ;; python-mode
      dired-details
+     centered-window-mode
+     rainbow-mode
      )
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -151,7 +156,8 @@ values."
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
-   dotspacemacs-default-font '("Iosevka:pixelsize=14:weight=light:slant=normal:width=normal:spacing=100:scalable=true")
+   dotspacemacs-default-font '("Roboto Mono:pixelsize=18:foundry=pyrs:weight=light:slant=normal:width=normal:scalable=true")
+   ;; dotspacemacs-default-font '("Iosevka:pixelsize=22:foundry=CYEL:weight=light:slant=normal:width=normal:spacing=90:scalable=true")
    ;; The leader key
    dotspacemacs-leader-key "SPC"
    ;; The key used for Emacs commands (M-x) (after pressing on the leader key).
@@ -315,9 +321,13 @@ This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
   (setq-default spacemacs-show-trailing-whitespace nil)
-  ;; (evil-leader/set-key-for-mode )
 
   (defun me/resize-window-to-fill-column ()
+    "Resize the current window to have width `fill-column'.
+If current window has width lesser/greater than `fill-column',
+this function reduces/increases the window width to show filled
+content. Only takes effect is the window can be resized; i.e., it
+is not the only window visible."
     (interactive)
     (let* ((current (window-width (selected-window)))
            (desired fill-column)
@@ -327,6 +337,7 @@ you should place your code here."
 
   (with-eval-after-load 'dired
     (define-key dired-mode-map (kbd "/") 'dired-narrow)
+    (define-key dired-mode-map (kbd "e") 'wdired-change-to-wdired-mode)
     (setq dired-listing-switches "-alh")
     (setq dired-k-human-readable +1)
     (setq dired-k-style nil)
@@ -374,7 +385,7 @@ you should place your code here."
     (setq org-drill-use-visible-cloze-face-p t)
     (setq org-drill-cram-hours 0))
 
-  (if (string-equal system-type "gnu/linux")
+  (when (string-equal system-type "gnu/linux")
       (progn
         (global-set-key (kbd "C-w") 'backward-kill-word)
         (global-set-key (kbd "C-\d") 'kill-region)
@@ -444,9 +455,11 @@ you should place your code here."
                           (set (car var) (cadr var)))
                       account-vars)
               (error "No email account found"))))
-        (add-hook 'mu4e-compose-pre-hook #'my-mu4e-set-account)))
+        (add-hook 'mu4e-compose-pre-hook #'my-mu4e-set-account)
+        (add-hook 'mu4e-view-mode-hook 'visual-line-mode)
+        (add-hook 'visual-line-mode-hook 'visual-fill-column-mode)))
 
-  (setq browse-url-browser-function 'browse-url-chrome)
+  (setq browse-url-browser-function 'browse-url-firefox)
   (setq vc-follow-symlinks t)
 
   ;;;; Custom movement/movement-related stuff.
@@ -460,6 +473,11 @@ an active region, kill that instead."
       (backward-kill-word (or arg 1))))
   (global-set-key (kbd "C-w") 'me/backward-kill-word-or-region)
 
+  (beginend-global-mode)
+
+  (add-to-list 'load-path "~/hackery/other/el-pocket")
+  (require 'el-pocket)
+
   (setq custom-file "~/.spacemacs_custom")
   (load custom-file)
 
@@ -472,7 +490,9 @@ an active region, kill that instead."
 
   (setq powerline-default-separator nil)
 
-  (load (expand-file-name "~/.quicklisp/slime-helper.el"))
+  ;; (load (expand-file-name "~/.quicklisp/slime-helper.el"))
+
+  (fringe-mode 14)
 
   )
 

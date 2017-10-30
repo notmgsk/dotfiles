@@ -23,17 +23,18 @@ bspc rule -a mplayer2 state=floating
 bspc rule -a Kupfer.py focus=on
 bspc rule -a Screenkey manage=off
 bspc rule -a Emacs state=tiled
+bspc rule -a MATLAB state=floating
 
 # for some reason lightdm (?) is turning on numlock when I log in
 numlockx off
 sxhkd &
 polybar example 2>/dev/null &
-feh --bg-fill ~/Pictures/outrun4k.jpg
+feh --bg-fill ~/Pictures/outrun/car.jpg
 compton 2>/dev/null &
 redshift &
 emacs --daemon=mail
 emacs --daemon
 getmail --rcfile=~/.getmail/getgmailrc &
 getmail --rcfile=~/.getmail/getunirc &
-
+caffeine &
 

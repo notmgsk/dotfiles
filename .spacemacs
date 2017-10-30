@@ -156,7 +156,7 @@ values."
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
-   dotspacemacs-default-font '("Roboto Mono:pixelsize=18:foundry=pyrs:weight=light:slant=normal:width=normal:scalable=true")
+   dotspacemacs-default-font '("Roboto Mono:pixelsize=18:foundry=pyrs:weight=normal:slant=normal:width=normal:scalable=true")
    ;; dotspacemacs-default-font '("Iosevka:pixelsize=22:foundry=CYEL:weight=light:slant=normal:width=normal:spacing=90:scalable=true")
    ;; The leader key
    dotspacemacs-leader-key "SPC"

@@ -150,7 +150,8 @@ values."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(spacemacs-dark
+   dotspacemacs-themes '(dracula
+                         spacemacs-dark
                          spacemacs-light)
    ;; If non nil the cursor color matches the state color in GUI Emacs.
    dotspacemacs-colorize-cursor-according-to-state t
@@ -475,9 +476,6 @@ an active region, kill that instead."
 
   (beginend-global-mode)
 
-  (add-to-list 'load-path "~/hackery/other/el-pocket")
-  (require 'el-pocket)
-
   (setq custom-file "~/.spacemacs_custom")
   (load custom-file)
 
@@ -493,6 +491,7 @@ an active region, kill that instead."
   ;; (load (expand-file-name "~/.quicklisp/slime-helper.el"))
 
   (fringe-mode 14)
+  (linum-mode +1)
 
   )
 

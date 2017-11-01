@@ -150,7 +150,8 @@ values."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(spacemacs-dark
+   dotspacemacs-themes '(dracula
+                         spacemacs-dark
                          spacemacs-light)
    ;; If non nil the cursor color matches the state color in GUI Emacs.
    dotspacemacs-colorize-cursor-according-to-state t
@@ -462,18 +463,18 @@ is not the only window visible."
   (setq browse-url-browser-function 'browse-url-firefox)
   (setq vc-follow-symlinks t)
 
-  (defun backward-kill-word-or-region (arg)
+  ;;;; Custom movement/movement-related stuff.
+  (defun me/backward-kill-word-or-region (arg)
+    "Kill (and add to kill-ring) the previous word. If there is
+an active region, kill that instead."
     (interactive "P")
     (if (region-active-p)
         (kill-region (region-beginning)
                      (region-end))
       (backward-kill-word (or arg 1))))
-  (global-set-key (kbd "C-w") 'backward-kill-word-or-region)
+  (global-set-key (kbd "C-w") 'me/backward-kill-word-or-region)
 
   (beginend-global-mode)
-
-  (add-to-list 'load-path "~/hackery/other/el-pocket")
-  (require 'el-pocket)
 
   (setq custom-file "~/.spacemacs_custom")
   (load custom-file)
@@ -490,6 +491,7 @@ is not the only window visible."
   ;; (load (expand-file-name "~/.quicklisp/slime-helper.el"))
 
   (fringe-mode 14)
+  (linum-mode +1)
 
   )
 

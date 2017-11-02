@@ -78,6 +78,7 @@ values."
      dired-details
      centered-window-mode
      rainbow-mode
+     dracula-theme
      )
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()

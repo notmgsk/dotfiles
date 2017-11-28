@@ -58,25 +58,26 @@ values."
      ;; spell-checking
      ;; syntax-checking
      ;; version-control
-     ;; common-lisp
+     common-lisp
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
    dotspacemacs-additional-packages
-   '(dired-narrow
+   '(
+     dired-narrow
      dired-k
-     extempore-mode
-     helm-books
-     org-cliplink
+     ;; extempore-mode
+     ;; helm-books
+     ;; org-cliplink
      visual-fill-column
      beginend
      web
      ;; el-pocket
      ;; python-mode
      dired-details
-     centered-window-mode
+     ;; centered-window-mode
      rainbow-mode
      dracula-theme
      )
@@ -480,8 +481,6 @@ an active region, kill that instead."
   (setq custom-file "~/.spacemacs_custom")
   (load custom-file)
 
-  (require 'helm-bookmark)
-
   ;; As per emacs rocks episode 16
   (require 'dired-details)
   (setq-default dired-details-hidden-string "--- ")
@@ -489,7 +488,7 @@ an active region, kill that instead."
 
   (setq powerline-default-separator nil)
 
-  ;; (load (expand-file-name "~/.quicklisp/slime-helper.el"))
+  (load (expand-file-name "~/quicklisp/slime-helper.el"))
 
   (fringe-mode 14)
   (linum-mode +1)

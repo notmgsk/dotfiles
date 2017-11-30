@@ -2,6 +2,9 @@
 ;; This file is loaded by Spacemacs at startup.
 ;; It must be stored in your home directory.
 
+(setq custom-file "~/.spacemacs_custom")
+(load custom-file)
+
 (defun dotspacemacs/layers ()
   "Configuration Layers declaration.
 You should not put any user code in this function besides modifying the variable
@@ -478,16 +481,12 @@ an active region, kill that instead."
 
   (beginend-global-mode)
 
-  (setq custom-file "~/.spacemacs_custom")
-  (load custom-file)
-
   ;; As per emacs rocks episode 16
   (require 'dired-details)
   (setq-default dired-details-hidden-string "--- ")
   (dired-details-install)
 
   (setq powerline-default-separator nil)
-
   (load (expand-file-name "~/quicklisp/slime-helper.el"))
 
   (fringe-mode 14)

@@ -83,6 +83,7 @@ values."
      ;; centered-window-mode
      rainbow-mode
      dracula-theme
+     workgroups
      )
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()

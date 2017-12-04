@@ -432,46 +432,50 @@ is not the only window visible."
           smtpmail-smtp-server "smtp.gmail.com"
           smtpmail-smtp-service 587
           message-send-mail-function 'smtpmail-send-it)
-    ;; I think in the latest mu releases there's some built-in stuff for "contexts" which
-    ;; will make this account list stuff a bit cleaner/robust. Gotta get around to using that.
-    (setq my-mu4e-account-alist
-          '(("gmail"
-             (mu4e-sent-folder "/gmail/sent")
-             (user-mail-address "markskilbeck@gmail.com")
-             (smtpmail-smtp-user "markskilbeck@gmail.com")
-             (smtp-local-domain "gmail.com")
-             (smtpmail-default-smtp-server "smtp.gmail.com")
-             (smtpmail-smtp-server "smtp.gmail.com")
-             (smtpmail-smtp-service 587))
-            ("uni"
-             (mu4e-sent-folder "/uni/sent")
-             (user-mail-address "ppyms3@exmail.nottingham.ac.uk")
-             (smtpmail-smtp-user "ppyms3@ad.nottingham.ac.uk")
-             (smtp-local-domain "office365.com")
-             (smtpmail-default-smtp-server "smtp.office365.com")
-             (smtpmail-smtp-server "smtp.office365.com")
-             (smtpmail-smtp-service 587))))
-    (defun my-mu4e-set-account ()
-      "Set the account for composing a message.
-   This function is taken from:
-     https://www.djcbsoftware.nl/code/mu/mu4e/Multiple-accounts.html"
-      (let* ((account
-              (if mu4e-compose-parent-message
-                  (let ((maildir (mu4e-message-field mu4e-compose-parent-message :maildir)))
-                    (string-match "/\\(.*?\\)$" maildir)
-                    (match-string 1 maildir))
-                (completing-read (format "Compose with account: (%s) "
-                                         (mapconcat #'(lambda (var) (car var))
-                                                    my-mu4e-account-alist "/"))
-                                 (mapcar #'(lambda (var) (car var)) my-mu4e-account-alist)
-                                 nil t nil nil (caar my-mu4e-account-alist))))
-             (account-vars (cdr (assoc account my-mu4e-account-alist))))
-        (if account-vars
-            (mapc #'(lambda (var)
-                      (set (car var) (cadr var)))
-                  account-vars)
-          (error "No email account found"))))
-    (add-hook 'mu4e-compose-pre-hook #'my-mu4e-set-account)
+
+    (setq my/mu4e-uni-context
+          (make-mu4e-context
+           :name "Uni"
+           :enter-func (lambda () (mu4e-message "Entering Uni context"))
+           :leave-func (lambda () (mu4e-message "Leaving Uni context"))
+           :match-func (lambda (msg)
+                         (when msg
+                           (mu4e-message-contact-field-matches
+                            msg
+                            :to '("ppyms3@nottingham.ac.uk" "ppyms3@exmail.nottingham.ac.uk"))))
+           :vars '((user-mail-address . "ppyms3@nottingham.ac.uk")
+                   (user-full-name . "Mark Skilbeck")
+                   (mu4e-sent-folder . "/sent")
+                   (user-mail-address . "ppyms3@exmail.nottingham.ac.uk")
+                   (smtpmail-smtp-user . "ppyms3@ad.nottingham.ac.uk")
+                   (smtp-local-domain . "office365.com")
+                   (smtpmail-default-smtp-server . "smtp.office365.com")
+                   (smtpmail-smtp-server . "smtp.office365.com")
+                   (smtpmail-smtp-service . 587))))
+
+    (setq my/mu4e-personal-context
+          (make-mu4e-context
+           :name "Personal"
+           :enter-func (lambda () (mu4e-message "Entering Personal context"))
+           :leave-func (lambda () (mu4e-message "Leaving Personal context"))
+           :match-func (lambda (msg)
+                         (when msg
+                           (mu4e-message-contact-field-matches
+                            msg
+                            :to "markskilbeck@gmail.com")))
+           :vars '((user-mail-address . "markskilbeck@gmail.com")
+                   (user-full-name . "Mark Skilbeck")
+                   (mu4e-sent-folder . "/sent")
+                   (smtpmail-smtp-user . "markskilbeck@gmail.com")
+                   (smtp-local-domain . "gmail.com")
+                   (smtpmail-default-smtp-server . "smtp.gmail.com")
+                   (smtpmail-smtp-server . "smtp.gmail.com")
+                   (smtpmail-smtp-service . 587))))
+
+    (setq mu4e-contexts (list my/mu4e-personal-context my/mu4e-uni-context))
+    (setq mu4e-context-policy 'pick-first)
+    (setq mu4e-compose-context-policy 'ask)
+
     (add-hook 'mu4e-view-mode-hook 'visual-line-mode)
     (add-hook 'visual-line-mode-hook 'visual-fill-column-mode))
 

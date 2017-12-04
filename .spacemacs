@@ -387,40 +387,50 @@ is not the only window visible."
     (setq org-drill-use-visible-cloze-face-p t)
     (setq org-drill-cram-hours 0))
 
+  ;;; LINUX SPECIFIC CONF
   (when (string-equal system-type "gnu/linux")
-      (progn
-        (global-set-key (kbd "C-w") 'backward-kill-word)
-        (global-set-key (kbd "C-\d") 'kill-region)
+    (global-set-key (kbd "C-w") 'backward-kill-word)
+    (global-set-key (kbd "C-\d") 'kill-region)
 
-        (add-to-list 'load-path "/usr/local/share/emacs/site-lisp/mu4e")
-        (require 'mu4e)
-        (require 'mu4e-contrib)
-        (require 'org-mu4e)
-        (setq mu4e-maildir "~/mail"
-              mu4e-trash-folder "/Trash"
-              mu4e-refile-folder "/Archive"
-              mu4e-get-mail-command "true"
-              mu4e-update-interval 300
-              mu4e-compose-signature-auto-include nil
-              mu4e-view-show-images t
-              mu4e-view-show-addresses t
-              mu4e-view-prefer-html t
-              ;; mu4e-html2text-command "elinks -dump -dump-width 100"
-              ;; mu4e-html2text-command "html2markdown"
-              mu4e-html2text-command 'mu4e-shr2text
-              shr-color-visible-luminance-min 60
-              shr-color-visible-distance-min 5
-              )
-        (advice-add #'shr-colorize-region :around (defun shr-no-colourise-region (&rest ignore)))
-        (add-to-list 'mu4e-view-actions '("ViewInBrowser" . mu4e-action-view-in-browser) t)
-        (setq org-mu4e-link-query-in-headers-mode nil)
-        (setq mu4e-sent-folder "/sent"
-              mu4e-drafts-folder "/drafts"
-              smtpmail-default-smtp-server "smtp.gmail.com"
-              smtpmail-smtp-server "smtp.gmail.com"
-              smtpmail-smtp-service 587
-              message-send-mail-function 'smtpmail-send-it)
-        (setq my-mu4e-account-alist
+    ;; Ideally would like to have mu/mu4e on my macbook also, but having trouble getting that
+    ;; working.
+    (add-to-list 'load-path "/usr/local/share/emacs/site-lisp/mu4e")
+    (require 'mu4e)
+    (require 'mu4e-contrib)
+    (require 'org-mu4e)
+    (setq mu4e-maildir "~/mail"
+          mu4e-trash-folder "/Trash"
+          mu4e-refile-folder "/Archive"
+          mu4e-get-mail-command "true"
+          mu4e-update-interval 300
+          mu4e-compose-signature-auto-include nil
+          mu4e-view-show-images t
+          mu4e-view-show-addresses t
+          mu4e-view-prefer-html t
+          ;; mu4e-html2text-command "elinks -dump -dump-width 100"
+          ;; mu4e-html2text-command "html2markdown"
+          mu4e-html2text-command 'mu4e-shr2text
+          shr-color-visible-luminance-min 60
+          shr-color-visible-distance-min 5
+          )
+    (add-to-list 'mu4e-bookmarks
+                 (make-mu4e-bookmark
+                  :name "Uni unread/flagged"
+                  :query "maildir:/uni flag:unread OR maildir:/uni flag:flagged"
+                  :key ?s))
+    ;; Stops shr using funky colours that make things unreadable.
+    (advice-add #'shr-colorize-region :around (defun shr-no-colourise-region (&rest ignore)))
+    (add-to-list 'mu4e-view-actions '("ViewInBrowser" . mu4e-action-view-in-browser) t)
+    (setq org-mu4e-link-query-in-headers-mode nil)
+    (setq mu4e-sent-folder "/sent"
+          mu4e-drafts-folder "/drafts"
+          smtpmail-default-smtp-server "smtp.gmail.com"
+          smtpmail-smtp-server "smtp.gmail.com"
+          smtpmail-smtp-service 587
+          message-send-mail-function 'smtpmail-send-it)
+    ;; I think in the latest mu releases there's some built-in stuff for "contexts" which
+    ;; will make this account list stuff a bit cleaner/robust. Gotta get around to using that.
+    (setq my-mu4e-account-alist
           '(("gmail"
              (mu4e-sent-folder "/gmail/sent")
              (user-mail-address "markskilbeck@gmail.com")
@@ -437,37 +447,41 @@ is not the only window visible."
              (smtpmail-default-smtp-server "smtp.office365.com")
              (smtpmail-smtp-server "smtp.office365.com")
              (smtpmail-smtp-service 587))))
-        (defun my-mu4e-set-account ()
-          "Set the account for composing a message.
+    (defun my-mu4e-set-account ()
+      "Set the account for composing a message.
    This function is taken from:
      https://www.djcbsoftware.nl/code/mu/mu4e/Multiple-accounts.html"
-          (let* ((account
-                  (if mu4e-compose-parent-message
-                      (let ((maildir (mu4e-message-field mu4e-compose-parent-message :maildir)))
-                        (string-match "/\\(.*?\\)$" maildir)
-                        (match-string 1 maildir))
-                    (completing-read (format "Compose with account: (%s) "
-                                             (mapconcat #'(lambda (var) (car var))
-                                                        my-mu4e-account-alist "/"))
-                                     (mapcar #'(lambda (var) (car var)) my-mu4e-account-alist)
-                                     nil t nil nil (caar my-mu4e-account-alist))))
-                 (account-vars (cdr (assoc account my-mu4e-account-alist))))
-            (if account-vars
-                (mapc #'(lambda (var)
-                          (set (car var) (cadr var)))
-                      account-vars)
-              (error "No email account found"))))
-        (add-hook 'mu4e-compose-pre-hook #'my-mu4e-set-account)
-        (add-hook 'mu4e-view-mode-hook 'visual-line-mode)
-        (add-hook 'visual-line-mode-hook 'visual-fill-column-mode)))
+      (let* ((account
+              (if mu4e-compose-parent-message
+                  (let ((maildir (mu4e-message-field mu4e-compose-parent-message :maildir)))
+                    (string-match "/\\(.*?\\)$" maildir)
+                    (match-string 1 maildir))
+                (completing-read (format "Compose with account: (%s) "
+                                         (mapconcat #'(lambda (var) (car var))
+                                                    my-mu4e-account-alist "/"))
+                                 (mapcar #'(lambda (var) (car var)) my-mu4e-account-alist)
+                                 nil t nil nil (caar my-mu4e-account-alist))))
+             (account-vars (cdr (assoc account my-mu4e-account-alist))))
+        (if account-vars
+            (mapc #'(lambda (var)
+                      (set (car var) (cadr var)))
+                  account-vars)
+          (error "No email account found"))))
+    (add-hook 'mu4e-compose-pre-hook #'my-mu4e-set-account)
+    (add-hook 'mu4e-view-mode-hook 'visual-line-mode)
+    (add-hook 'visual-line-mode-hook 'visual-fill-column-mode))
 
+  ;; Open urls in text with firefox
   (setq browse-url-browser-function 'browse-url-firefox)
+  ;; I have ~/.spacemacs, ~/.config/... etc symlinked to my ~/hackery/dotfiles/. Magit etc
+  ;; needs to load the dotfile stuff, not the homedir stuff, so follow the symlink to
+  ;; dotfiles.
   (setq vc-follow-symlinks t)
 
   ;;;; Custom movement/movement-related stuff.
   (defun me/backward-kill-word-or-region (arg)
-    "Kill (and add to kill-ring) the previous word. If there is
-an active region, kill that instead."
+    "Kill the previous word. If there is an active region, kill
+that instead. In both cases, save killed text to kill ring."
     (interactive "P")
     (if (region-active-p)
         (kill-region (region-beginning)
@@ -475,11 +489,18 @@ an active region, kill that instead."
       (backward-kill-word (or arg 1))))
   (global-set-key (kbd "C-w") 'me/backward-kill-word-or-region)
 
+  ;; Useful package that changes what is meant by beginning/ending of a file. For example,
+  ;; while reading an email, M-< will take you to the beginning of the email body rather
+  ;; than the very first line in the email (top of the headers). 
   (beginend-global-mode)
 
+  ;; Stop emacs putting customized variables in this configuration file. I do this because
+  ;; I don't want to have to commit small font changes, library confirmations, etc. to the
+  ;; repo. It doesn't work all the time, though, so....
   (setq custom-file "~/.spacemacs_custom")
   (load custom-file)
 
+  ;; I forget what this is useful for.
   (require 'helm-bookmark)
 
   ;; As per emacs rocks episode 16
@@ -487,6 +508,7 @@ an active region, kill that instead."
   (setq-default dired-details-hidden-string "--- ")
   (dired-details-install)
 
+  ;; Remove those ugly rounded separators that don't show properly on my systems.
   (setq powerline-default-separator nil)
 
   ;; (load (expand-file-name "~/.quicklisp/slime-helper.el"))

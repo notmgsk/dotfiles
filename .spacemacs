@@ -2,6 +2,9 @@
 ;; This file is loaded by Spacemacs at startup.
 ;; It must be stored in your home directory.
 
+(setq custom-file "~/.spacemacs_custom")
+(load custom-file)
+
 (defun dotspacemacs/layers ()
   "Configuration Layers declaration.
 You should not put any user code in this function besides modifying the variable
@@ -58,32 +61,33 @@ values."
      ;; spell-checking
      ;; syntax-checking
      ;; version-control
-     ;; common-lisp
+     common-lisp
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
    dotspacemacs-additional-packages
-   '(dired-narrow
+   '(
+     dired-narrow
      dired-k
-     extempore-mode
-     helm-books
-     org-cliplink
+     ;; extempore-mode
+     ;; helm-books
+     ;; org-cliplink
      visual-fill-column
      beginend
      web
      ;; el-pocket
      ;; python-mode
      dired-details
-     centered-window-mode
+     ;; centered-window-mode
      rainbow-mode
      dracula-theme
      )
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
    ;; A list of packages that will not be installed and loaded.
-   dotspacemacs-excluded-packages '(org-projectile)
+   dotspacemacs-excluded-packages '(org-projectile org-bullets)
    ;; Defines the behaviour of Spacemacs when installing packages.
    ;; Possible values are `used-only', `used-but-keep-unused' and `all'.
    ;; `used-only' installs only explicitly used packages and uninstall any
@@ -494,15 +498,6 @@ that instead. In both cases, save killed text to kill ring."
   ;; than the very first line in the email (top of the headers). 
   (beginend-global-mode)
 
-  ;; Stop emacs putting customized variables in this configuration file. I do this because
-  ;; I don't want to have to commit small font changes, library confirmations, etc. to the
-  ;; repo. It doesn't work all the time, though, so....
-  (setq custom-file "~/.spacemacs_custom")
-  (load custom-file)
-
-  ;; I forget what this is useful for.
-  (require 'helm-bookmark)
-
   ;; As per emacs rocks episode 16
   (require 'dired-details)
   (setq-default dired-details-hidden-string "--- ")
@@ -510,8 +505,7 @@ that instead. In both cases, save killed text to kill ring."
 
   ;; Remove those ugly rounded separators that don't show properly on my systems.
   (setq powerline-default-separator nil)
-
-  ;; (load (expand-file-name "~/.quicklisp/slime-helper.el"))
+  (load (expand-file-name "~/quicklisp/slime-helper.el"))
 
   (fringe-mode 14)
   (linum-mode +1)

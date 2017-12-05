@@ -426,6 +426,7 @@ is not the only window visible."
     ;; Stops shr using funky colours that make things unreadable.
     (advice-add #'shr-colorize-region :around (defun shr-no-colourise-region (&rest ignore)))
     (add-to-list 'mu4e-view-actions '("ViewInBrowser" . mu4e-action-view-in-browser) t)
+
     (setq org-mu4e-link-query-in-headers-mode nil)
     (setq mu4e-sent-folder "/sent"
           mu4e-drafts-folder "/drafts"
@@ -443,7 +444,8 @@ is not the only window visible."
                          (when msg
                            (mu4e-message-contact-field-matches
                             msg
-                            :to '("ppyms3@nottingham.ac.uk" "ppyms3@exmail.nottingham.ac.uk"))))
+                            '(:to :cc :bcc) '("ppyms3@nottingham.ac.uk"
+                                              "ppyms3@exmail.nottingham.ac.uk"))))
            :vars '((user-mail-address . "ppyms3@nottingham.ac.uk")
                    (user-full-name . "Mark Skilbeck")
                    (mu4e-sent-folder . "/sent")
@@ -463,7 +465,7 @@ is not the only window visible."
                          (when msg
                            (mu4e-message-contact-field-matches
                             msg
-                            :to "markskilbeck@gmail.com")))
+                            '(:to :cc :bcc) "markskilbeck@gmail.com")))
            :vars '((user-mail-address . "markskilbeck@gmail.com")
                    (user-full-name . "Mark Skilbeck")
                    (mu4e-sent-folder . "/sent")
@@ -482,6 +484,7 @@ is not the only window visible."
 
   ;; Open urls in text with firefox
   (setq browse-url-browser-function 'browse-url-firefox)
+
   ;; I have ~/.spacemacs, ~/.config/... etc symlinked to my ~/hackery/dotfiles/. Magit etc
   ;; needs to load the dotfile stuff, not the homedir stuff, so follow the symlink to
   ;; dotfiles.

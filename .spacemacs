@@ -511,6 +511,20 @@ that instead. In both cases, save killed text to kill ring."
   (setq-default dired-details-hidden-string "--- ")
   (dired-details-install)
 
+  ;; workgroups goes some way to giving a "desktop" experience, where you can save
+  ;; window/buffer configurations. They can persist over sessions too, so exiting/opening
+  ;; emacs doesn't mean your nice window configuration is gone forever (assuming you told
+  ;; workgrouns to save it).
+  ;;
+  ;; Maybe look into using
+  ;; http://boyanangelov.com/spacemacs/layers/+window-management/spacemacs-layouts/README.html
+  ;; Basic use:
+  ;; 1. Identify window and buffer layout that I need to save
+  ;; 2. Save that layout to file with: M-x wg-save
+  ;; 3. If you close emacs / do stuff to lose that layout, reload it with
+  ;;    M-x wg-load
+  (require 'workgroups)
+
   ;; Remove those ugly rounded separators that don't show properly on my systems.
   (setq powerline-default-separator nil)
   (load (expand-file-name "~/quicklisp/slime-helper.el"))

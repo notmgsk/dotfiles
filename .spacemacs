@@ -434,6 +434,9 @@ is not the only window visible."
           smtpmail-smtp-server "smtp.gmail.com"
           smtpmail-smtp-service 587
           message-send-mail-function 'smtpmail-send-it)
+    (setq mu4e-headers-hide-predicate
+          (lambda (msg)
+            (member 'trashed (mu4e-message-field msg :flags))))
 
     (setq my/mu4e-uni-context
           (make-mu4e-context

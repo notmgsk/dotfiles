@@ -1,0 +1,24 @@
+# Sample minimal config file.  Copy this to ~/.offlineimaprc and edit to
+# get started fast.
+
+[general]
+accounts = Main
+pythonfile = ~/.offlineimap.py
+
+[Account Main]
+localrepository = Local
+remoterepository = Remote
+#autorefresh = 5
+
+[Repository Local]
+type = Maildir
+localfolders = ~/mail
+
+[Repository Remote]
+type = IMAP
+remotehost = 0mg.sk
+remoteuser = mgsk
+starttls = yes
+ssl = yes
+sslcacertfile = /etc/ssl/certs/ca-certificates.crt
+remotepasseval = keyring.get_password('offlineimap', 'email')

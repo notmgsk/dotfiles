@@ -259,11 +259,11 @@ values."
    ;; A value from the range (0..100), in increasing opacity, which describes
    ;; the transparency level of a frame when it's active or selected.
    ;; Transparency can be toggled through `toggle-transparency'. (default 90)
-   dotspacemacs-active-transparency 90
+   dotspacemacs-active-transparency 100
    ;; A value from the range (0..100), in increasing opacity, which describes
    ;; the transparency level of a frame when it's inactive or deselected.
    ;; Transparency can be toggled through `toggle-transparency'. (default 90)
-   dotspacemacs-inactive-transparency 90
+   dotspacemacs-inactive-transparency 100
    ;; If non nil show the titles of transient states. (default t)
    dotspacemacs-show-transient-state-title t
    ;; If non nil show the color guide hint for transient state keys. (default t)
@@ -386,7 +386,9 @@ is not the only window visible."
     ;;(add-hook 'org-mode-hook 'org-display-outline-path)
     (global-set-key (kbd "C-c M-o") 'org-iswitchb)
     ;;(setq header-line-format '(:eval (org-display-outline-path nil t))))
-    )
+    (bind-key "C-_" 'undo org-mode-map)
+    (add-hook 'org-mode-hook 'auto-fill-mode)
+    (add-hook 'org-mode-hook (lambda () (setq fill-column 80))))
 
   (with-eval-after-load 'org-drill
     (setq org-drill-use-visible-cloze-face-p t)

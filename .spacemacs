@@ -496,6 +496,14 @@ is not the only window visible."
   ;; dotfiles.
   (setq vc-follow-symlinks t)
 
+  ;; Tell magit to give me an overview of my favourite repos. Use magit-list-repositories
+  ;; to get a repo list. It's not actually that helpful... essentially just shows the repo
+  ;; paths with no other useful information.
+  ;;
+  ;; Maybe a TODO is to put some useful info in there, e.g. if that repo has changes, etc.
+  (setq magit-repository-directories
+        '(("~/hackery/" . 1)))
+
   ;;;; Custom movement/movement-related stuff.
   (defun me/backward-kill-word-or-region (arg)
     "Kill the previous word. If there is an active region, kill

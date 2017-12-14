@@ -387,6 +387,7 @@ is not the only window visible."
     (global-set-key (kbd "C-c M-o") 'org-iswitchb)
     ;;(setq header-line-format '(:eval (org-display-outline-path nil t))))
     (bind-key "C-_" 'undo org-mode-map)
+    (bind-key "<C-M-return>" 'org-insert-item org-mode-map)
     (add-hook 'org-mode-hook 'auto-fill-mode)
     (add-hook 'org-mode-hook (lambda () (setq fill-column 80))))
 

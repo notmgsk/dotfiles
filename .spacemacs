@@ -84,6 +84,7 @@ values."
      rainbow-mode
      dracula-theme
      workgroups
+     swiper
      )
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -548,6 +549,9 @@ that instead. In both cases, save killed text to kill ring."
   ;; use "M-x helm-registers" for a list of registers. It would be nice to have
   ;; more descriptive names, but maybe that's when workgroups is more relevant.
   (require 'workgroups)
+
+  ;; Swiper is better than search-forward.
+  (global-set-key (kbd "C-s") #'swiper)
 
   ;; Remove those ugly rounded separators that don't show properly on my systems.
   (setq powerline-default-separator nil)

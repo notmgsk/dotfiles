@@ -537,6 +537,16 @@ that instead. In both cases, save killed text to kill ring."
   ;; 2. Save that layout to file with: M-x wg-save
   ;; 3. If you close emacs / do stuff to lose that layout, reload it with
   ;;    M-x wg-load
+  ;; An alternative to workgroups is to use the window registers. Workgroups seem more
+  ;; appropriate for long-term window configurations that might need to persist over
+  ;; sessions. Use window registers if you don't want to lose a window configuration for
+  ;; some small amount of time. E.g., I'm currently writing some quantum computing notes
+  ;; in one buffer and have the pdf I'm reading in another, with side-by-side windows
+  ;; showing both. If instead I would like to quickly do something else, for example, edit
+  ;; my emacs config, I will save the window config to a register with "C-x r w <number>"
+  ;; and later recall that window config with "C-x r j <number>". Alternatively,
+  ;; use "M-x helm-registers" for a list of registers. It would be nice to have
+  ;; more descriptive names, but maybe that's when workgroups is more relevant.
   (require 'workgroups)
 
   ;; Remove those ugly rounded separators that don't show properly on my systems.

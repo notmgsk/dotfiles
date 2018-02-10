@@ -61,8 +61,8 @@ polybar example 2>/dev/null &
 feh --bg-fill ~/Pictures/outrun/car.jpg
 compton 2>/dev/null &
 redshift &
-# Emacs daemon for email
-emacs -q --load ~/hackery/emacs.g/init.el --daemon=mail
+# Emacs daemon for email.
+emacs -q --load ~/hackery/emacs.g/init.el --eval '(setq server-name "mail")' --daemon
 # Emacs daemon for everything else
 emacs -q --load ~/hackery/emacs.g/init.el --daemon
 #getmail --rcfile=~/.getmail/getgmailrc &

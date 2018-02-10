@@ -16,6 +16,12 @@ bspc config focus_follows_pointer true
 
 bspc monitor $monitor1 -d genrl hackr email chati
 
+# TODO This only configures the root node on each monitor. If I move a
+# node from one monitor to another, the node will keep the
+# configuration of its previous desktop. This isn't horrific as long
+# as windows are spawned on the "correct" monitor, but is ugly on the
+# rare occasion that it happens.
+
 bspc config -m $monitor1 border_width    8
 bspc config -m $monitor1 window_gap      20
 bspc config -m $monitor1 top_padding     50

@@ -16,7 +16,7 @@ super + space
 super + equal
     =
 
-F2
+super + e
     emacsclient -c
 
 super + f

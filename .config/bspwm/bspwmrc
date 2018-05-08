@@ -71,5 +71,5 @@ emacs -q --load ~/hackery/emacs.g/init.el --daemon
 #getmail --rcfile=~/.getmail/getunirc &
 caffeine &
 
-bspwm_single_node DP-4 &
+bspwm_single_node $monitor1 &
 

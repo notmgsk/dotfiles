@@ -2,9 +2,10 @@
 ! ROFI Color theme
 ! ------------------------------------------------------------------------------
 rofi.color-enabled: true
-rofi.color-window: #002b37, #002b37, #003642
-rofi.color-normal: #002b37, #819396, #002b37, #003642, #819396
-rofi.color-active: #002b37, #008ed4, #002b37, #003642, #008ed4
-rofi.color-urgent: #002b37, #da4281, #002b37, #003642, #da4281
-rofi.font: Roboto Mono 14
-rofi.width: 60
+# rofi.color-window: #b576da, #b576da, #b576da
+# rofi.color-normal: #b576da, #262624, #002b37, #003642, #819396
+# rofi.color-active: #002b37, #008ed4, #002b37, #003642, #008ed4
+# rofi.color-urgent: #002b37, #da4281, #002b37, #003642, #da4281
+rofi.theme: lb
+rofi.font: Iosevka Term 16
+rofi.width: 50

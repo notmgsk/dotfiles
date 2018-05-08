@@ -37,6 +37,7 @@ case $HOSTNAME in
 esac
 
 bspc monitor $monitor1 -d genrl hackr email chati
+pgrep -f polybar || polybar example 2>/home/mgsk/polybaroutput &
 
 # TODO This only configures the root node on each monitor. If I move a
 # node from one monitor to another, the node will keep the
@@ -81,19 +82,18 @@ bspc rule -a MATLAB     state=floating
 
 # for some reason lightdm (?) is turning on numlock when I log in
 numlockx off
-sxhkd &
-polybar example 2>/home/mgsk/polybaroutput &
+pgrep -f sxhkd || sxhkd &
 feh --bg-fill ~/Pictures/BladeRunner1.jpg
-offlineimap &
-compton 2>/dev/null &
-redshift &
+pgrep -f offlineimap || offlineimap &
+pgrep -f compton || compton 2>/dev/null &
+pgrep -f redshift || redshift &
 # Emacs daemon for email.
-emacs -q --eval '(setq server-name "mail")' --load ~/hackery/emacs.g/init.el --daemon
+emacs -q --eval '(setq server-name "mail")' --daemon --load ~/hackery/emacs.g/init.el 
 # Emacs daemon for everything else
 emacs -q --load ~/hackery/emacs.g/init.el --daemon
 #getmail --rcfile=~/.getmail/getgmailrc &
 #getmail --rcfile=~/.getmail/getunirc &
-caffeine &
+pgrep -f caffeine || caffeine &
 
-bspwm_single_node $monitor1 &
+pgrep -f bspwm_single_node || bspwm_single_node $monitor1 &
 

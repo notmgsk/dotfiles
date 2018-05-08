@@ -11,7 +11,7 @@ super + Return
 
 # program launcher
 super + space
-    rofi -m DP-4 -combi-modi window,run -show combi
+    rofi -combi-modi window,run -show combi
 
 super + equal
     =

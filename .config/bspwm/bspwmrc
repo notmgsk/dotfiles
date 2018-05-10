@@ -11,12 +11,12 @@ case $HOSTNAME in
         bp1=10
         lp1=40
         rp1=40
-        bw2=8
+        bw2=4
         wg2=20
-        tp2=50
-        bp2=10
-        lp2=40
-        rp2=40
+        tp2=0
+        bp2=0
+        lp2=0
+        rp2=0
         ;;
     *)
         monitor1=eDP-1

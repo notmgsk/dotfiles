@@ -170,10 +170,10 @@ super + {Left,Down,Up,Right}
 # Media keys
 ## Media keys
 XF86AudioRaiseVolume
-    pactl set-sink-volume 0 +5%
+    amixer -D pulse -q sset Master 10%+
 
 XF86AudioLowerVolume
-    pactl set-sink-volume 0 -5%
+    amixer -D pulse -q sset Master 10%-
 
 XF86AudioMute
     amixer -D pulse set Master +1 toggle

@@ -88,9 +88,9 @@ pgrep -f offlineimap || offlineimap &
 pgrep -f compton || compton 2>/dev/null &
 pgrep -f redshift || redshift &
 # Emacs daemon for email.
-emacs -q --eval '(setq server-name "mail")' --daemon --load ~/hackery/emacs.g/init.el 
+[ -S /tmp/emacs1000/mail ] || emacs -q --eval '(setq server-name "mail")' --daemon --load ~/hackery/emacs.g/init.el 
 # Emacs daemon for everything else
-emacs -q --load ~/hackery/emacs.g/init.el --daemon
+[ -S /tmp/emacs1000/server ] || emacs -q --load ~/hackery/emacs.g/init.el --daemon
 #getmail --rcfile=~/.getmail/getgmailrc &
 #getmail --rcfile=~/.getmail/getunirc &
 pgrep -f caffeine || caffeine &

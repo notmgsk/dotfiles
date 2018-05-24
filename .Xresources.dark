@@ -23,37 +23,58 @@ st.pointerColorForeground:S_base1
 #define S_cyan          #2aa198
 #define S_green         #859900
 
-!! black dark/light
-st.color0:                S_base02
-st.color8:                S_base03
+! solarized dark
+! !! black dark/light
+! st.color0:                S_base02
+! st.color8:                S_base03
 
-!! red dark/light
-st.color1:                S_red
-st.color9:                S_orange
+! !! red dark/light
+! st.color1:                S_red
+! st.color9:                S_orange
 
-!! green dark/light
-st.color2:                S_green
-st.color10:               S_base01
+! !! green dark/light
+! st.color2:                S_green
+! st.color10:               S_base01
 
-!! yellow dark/light
-st.color3:                S_yellow
-st.color11:               S_base00
+! !! yellow dark/light
+! st.color3:                S_yellow
+! st.color11:               S_base00
 
-!! blue dark/light
-st.color4:                S_blue
-st.color12:               S_base0
+! !! blue dark/light
+! st.color4:                S_blue
+! st.color12:               S_base0
 
-!! magenta dark/light
-st.color5:                S_magenta
-st.color13:               S_violet
+! !! magenta dark/light
+! st.color5:                S_magenta
+! st.color13:               S_violet
 
-!! cyan dark/light
-st.color6:                S_cyan
-st.color14:               S_base1
+! !! cyan dark/light
+! st.color6:                S_cyan
+! st.color14:               S_base1
 
-!! white dark/light
-st.color7:                S_base2
-st.color15:               S_base3
+! !! white dark/light
+! st.color7:                S_base2
+! st.color15:               S_base3 
 
-st.font: Iosevka Term:size=11
+! Dracula Xresources palette
+st.foreground: #F8F8F2
+st.background: #282A36
+st.color0:     #000000
+st.color8:     #4D4D4D
+st.color1:     #FF5555
+st.color9:     #FF6E67
+st.color2:     #50FA7B
+st.color10:    #5AF78E
+st.color3:     #F1FA8C
+st.color11:    #F4F99D
+st.color4:     #BD93F9
+st.color12:    #CAA9FA
+st.color5:     #FF79C6
+st.color13:    #FF92D0
+st.color6:     #8BE9FD
+st.color14:    #9AEDFE
+st.color7:     #BFBFBF
+st.color15: #E6E6E6
+
+st.font: Roboto Mono:pixelsize=18:foundry=pyrs:weight=normal:scalable=true
 st.letterSpace: -1

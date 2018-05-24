@@ -55,5 +55,5 @@ st.color14:               S_base1
 st.color7:                S_base2
 st.color15:               S_base3
 
-st.font: Iosevka Term:size=11
+st.font: Roboto Mono:pixelsize=18:foundry=pyrs:weight=normal:scalable=true
 st.letterSpace: -1

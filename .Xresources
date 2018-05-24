@@ -5,3 +5,118 @@ Xft.hintstyle:  hintfull
 Xft.hinting: 1
 Xft.antialias: 1
 Xft.rgba: rgb
+
+*background: #141615
+*foreground: #e5e5e3
+*color0: #262624
+*color1: #de5653
+*color2: #b6c87f
+*color3: #ec9946
+*color4: #76a1dd
+*color5: #cdb0d6
+*color6: #76bfb4
+*color7: #494e55
+*color8: #5d5c61
+*color9: #e83435
+*color10: #99ca1e
+*color11: #eacc6b
+*color12: #5d9adb
+*color13: #b576da
+*color14: #5ccad8
+*color15: #c3c7d0
+
+URxvt*font: xft:Roboto Mono:size=9
+URxvt.letterSpace: -1
+URxvt.scrollBar: false
+URxvt.perl-ext-common: font-size
+URxvt.keysym.C-S-equal: font-size:increase
+URxvt.keysym.C-minus: font-size:decrease
+URxvt.keysym.C-equal: font-size:reset
+
+! #define S_base03        #002b36
+! #define S_base02        #073642
+! #define S_base01        #586e75
+! #define S_base00        #657b83
+! #define S_base0         #839496
+! #define S_base1         #93a1a1
+! #define S_base2         #eee8d5
+! #define S_base3         #fdf6e3
+
+! *background:            S_base3
+! *foreground:            S_base00
+! *fadeColor:             S_base3
+! *cursorColor:           S_base01
+! *pointerColorBackground:S_base1
+! *pointerColorForeground:S_base01
+
+! #define S_yellow        #b58900
+! #define S_orange        #cb4b16
+! #define S_red           #dc322f
+! #define S_magenta       #d33682
+! #define S_violet        #6c71c4
+! #define S_blue          #268bd2
+! #define S_cyan          #2aa198
+! #define S_green         #859900
+
+! !! black dark/light
+! *color0:                S_base02
+! *color8:                S_base03
+
+! !! red dark/light
+! *color1:                S_red
+! *color9:                S_orange
+
+! !! green dark/light
+! *color2:                S_green
+! *color10:               S_base01
+
+! !! yellow dark/light
+! *color3:                S_yellow
+! *color11:               S_base00
+
+! !! blue dark/light
+! *color4:                S_blue
+! *color12:               S_base0
+
+! !! magenta dark/light
+! *color5:                S_magenta
+! *color13:               S_violet
+
+! !! cyan dark/light
+! *color6:                S_cyan
+! *color14:               S_base1
+
+! !! white dark/light
+! *color7:                S_base2
+! *color15: S_base3
+
+! opacity==255 means what terminal will be not transparent, 0 - fully transparent
+st.opacity:      255
+! Defaults taken from base16-twilight colorscheme.
+st.foreground:   #a7a7a7
+st.background:   #1e1e1e
+st.color0:       #1e1e1e
+st.color1:       #cf6a4c
+st.color2:       #8f9d6a
+st.color3:       #f9ee98
+st.color4:       #7587a6
+st.color5:       #9b859d
+st.color6:       #afc4db
+st.color7:       #a7a7a7
+st.color8:       #5f5a60
+st.color9:       #cf6a4c
+st.color10:      #8f9d6a
+st.color11:      #f9ee98
+st.color12:      #7587a6
+st.color13:      #9b859d
+st.color14:      #afc4db
+st.color15:      #ffffff
+st.color16:      #cda869
+st.color17:      #9b703f
+st.color18:      #323537
+st.color19:      #464b50
+st.color20:      #838184
+st.color21: #c3c3c3
+
+st.font: Iosevka Term:size=11
+st.letterSpace: -1

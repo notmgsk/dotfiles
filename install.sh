@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# TODO Consider using GNU Stow to simplify things (it has support for
+# XDG config): 
+# https://alexpearce.me/2016/02/managing-dotfiles-with-stow/
+
 # Uncomment the following for testing.
 # HOME="/home/mgsk/HOME2"
 # mkdir -p "$HOME"

@@ -4,7 +4,7 @@
 
 # terminal emulator
 super + Return
-    st
+    kitty
 
 # super + shift + space
 #     bspc node -t tiled || bspc node -t floating
@@ -185,4 +185,4 @@ XF86AudioMute
     amixer -D pulse set Master +1 toggle
 
 super + alt + space
-    rofi -m DP-4 -show window
+    rofi -m HDMI-0 -show window

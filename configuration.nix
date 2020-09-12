@@ -1,3 +1,6 @@
+# TODO Follow Cole's advice and don't install everything to the
+# system, instead using user-specific configs.
+
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
@@ -46,9 +49,24 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    wget vim emacs firefox git bspwm sxhkd rofi polybar
-    slack st compton feh kitty jq bc spotify sqlite gcc
-    pavucontrol pasystray
+    vim emacs
+
+    firefox slack spotify
+    
+    wget git
+    feh # Image viewer
+    kitty # Terminal emulator
+    jq bc killall xorg.xbacklight
+    
+    pavucontrol pasystray # audio stuff
+
+    go
+    python python3
+    sqlite
+    gcc
+
+    # Desktop
+    redshift bspwm sxhkd rofi polybar compton
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -96,7 +114,11 @@
   };
   #services.xserver.desktopManager.plasma5.enable = true;
   services.xserver.windowManager.bspwm.enable = true;
+  
   services.xserver.displayManager.defaultSession = "none+bspwm";
+  services.xserver.displayManager.sessionCommands = ''
+    ${pkgs.xorg.xset}/bin/xset r rate 200 40
+  '';
 
   services.xserver.videoDrivers = [ "nvidia" ];
 

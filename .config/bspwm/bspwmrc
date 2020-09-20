@@ -36,8 +36,7 @@ case $HOSTNAME in
         ;;
 esac
 
-bspc monitor $monitor1 -d genrl hackr email chati
-pgrep -f polybar >/dev/null || polybar example 2>/home/mgsk/polybaroutput &
+bspc monitor $monitor1 -d genrl hackr email chati readi
 
 # TODO This only configures the root node on each monitor. If I move a
 # node from one monitor to another, the node will keep the
@@ -80,11 +79,23 @@ bspc rule -a Screenkey  manage=off
 bspc rule -a Emacs      state=tiled
 bspc rule -a MATLAB     state=floating
 
+# NOTE All tools, including bspc, should be installed by
+# configuration.nix / whatever prior to running this. No checks are
+# made for unavailable executables, and so this startup script will
+# fail if any are missing.
 feh --bg-fill ~/Pictures/backgrounds/current-background.jpg
 
+pgrep -f polybar >/dev/null || polybar example 2>/home/mgsk/polybaroutput &
 pgrep -f sxhkd >/dev/null || sxhkd &
 pgrep -f compton >/dev/null || compton 2>/dev/null &
 pgrep -f redshift >/dev/null || redshift &
+pgrep -f blueman-applet >/dev/null || blueman-applet &
+pgrep -f pasystray >/dev/null || pasystray &
 
-#pgrep -f bspwm_single_node >/dev/null || bspwm_single_node $monitor1 &
+# TODO Override (and increase) the left/right padding configuration
+# for a desktop with a single window. Prevents a single window
+# spanning the full width of a large monitor (bad for readability).
+#
+# TODO Fix this.
+#pgrep -f bspwm_single_node >/dev/null || ./bspwm_single_node HDMI-0 &
 

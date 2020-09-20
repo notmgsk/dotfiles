@@ -6,7 +6,11 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
 { config, pkgs, ... }:
-
+let
+  unstable = import
+    (builtins.fetchTarball https://github.com/NixOS/nixpkgs-channels/archive/nixos-unstable.tar.gz)
+    { config = config.nixpkgs.config; };
+in
 {
   imports =
     [ # Include the results of the hardware scan.
@@ -49,25 +53,53 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    vim emacs
+    vim emacs docker
 
-    firefox slack spotify
-    
+    firefox slack spotify thunderbird
+
+    zsh oh-my-zsh zsh-autosuggestions zsh-fast-syntax-highlighting
     wget git
     feh # Image viewer
-    kitty # Terminal emulator
+    kitty alacritty # Terminal emulator
+    evince # pdf reader
     jq bc killall xorg.xbacklight
+    ripgrep ispell
+    htop
+
+    nix-index
+    direnv
     
     pavucontrol pasystray # audio stuff
 
+    (pkgs.callPackage ./sbcl.nix {})
+    lispPackages.quicklisp
     go
     python python3
     sqlite
     gcc
+    gnumake
+    antlr4
+    zeromq4
+    czmq
+    stdenv.cc.cc.lib
 
     # Desktop
     redshift bspwm sxhkd rofi polybar compton
+    gnome3.adwaita-icon-theme
   ];
+
+  fonts = {
+    fontconfig = {
+      defaultFonts = {
+        monospace = [ "Iosevka" ];
+      };
+    };
+    fonts = with pkgs; [
+      iosevka
+    ];
+  };
+
+  environment.variables.XCURSOR_SIZE = "64";
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -125,11 +157,29 @@
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.mgsk = {
     isNormalUser = true;
-    extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
+    extraGroups = [ "wheel" "docker" ]; 
   };
 
   hardware.bluetooth.enable = true;
   services.blueman.enable = true;
+
+  virtualisation.docker.enable = true;
+
+  programs.zsh = {
+    enable = true;
+    autosuggestions.enable = true;
+    syntaxHighlighting.enable = true;
+    ohMyZsh.enable = true;
+    ohMyZsh.theme = "robbyrussell";
+  };
+
+  programs.zsh.interactiveShellInit = ''
+# Customize your oh-my-zsh options here
+
+'';
+  programs.zsh.promptInit = ""; # Clear this to avoid a conflict with oh-my-zsh
+
+  users.defaultUserShell = pkgs.zsh;
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

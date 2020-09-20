@@ -85,3 +85,6 @@ st.color15: #E6E6E6
 
 st.font: Roboto Mono:pixelsize=18:foundry=pyrs:weight=normal:scalable=true
 st.letterSpace: -1
+
+Xcursor.size: 64
+Xcursor.theme: Adwaita

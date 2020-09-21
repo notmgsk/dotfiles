@@ -141,8 +141,8 @@ in
   # services.xserver.displayManager.sddm.enable = true;
   services.xserver.displayManager.lightdm = {
     enable = true;
-    #autoLogin.enable = true;
-    #autoLogin.user = "mgsk";
+    autoLogin.enable = true;
+    autoLogin.user = "mgsk";
   };
   #services.xserver.desktopManager.plasma5.enable = true;
   services.xserver.windowManager.bspwm.enable = true;

@@ -97,5 +97,5 @@ pgrep -f pasystray >/dev/null || pasystray &
 # spanning the full width of a large monitor (bad for readability).
 #
 # TODO Fix this.
-#pgrep -f bspwm_single_node >/dev/null || ./bspwm_single_node HDMI-0 &
+pgrep -f bspwm_single_node >/dev/null || ./bspwm_single_node HDMI-0 > /home/mgsk/singlenodewat &
 

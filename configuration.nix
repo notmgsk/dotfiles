@@ -64,7 +64,7 @@ in
     evince # pdf reader
     jq bc killall xorg.xbacklight
     ripgrep ispell
-    htop
+    htop tmux
 
     nix-index
     direnv

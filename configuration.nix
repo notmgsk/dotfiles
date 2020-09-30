@@ -65,6 +65,7 @@ in
     jq bc killall xorg.xbacklight
     ripgrep ispell
     htop tmux
+    httpie
 
     nix-index
     direnv

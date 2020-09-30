@@ -70,7 +70,7 @@ in
 
     nix-index
     direnv
-    
+
     pavucontrol pasystray # audio stuff
 
     (pkgs.callPackage ./sbcl.nix {})
@@ -131,10 +131,15 @@ in
   hardware.pulseaudio.enable = true;
 
   # Enable the X11 windowing system.
-  services.xserver.enable = true;
-  services.xserver.dpi = 144;
-  services.xserver.layout = "us";
-  services.xserver.xkbOptions = "ctrl:swapcaps";
+  services.xserver = {
+    enable = true;
+    dpi = 144;
+    layout = "us";
+    xkbOptions = "ctrl:swapcaps";
+    autoRepeatDelay = 200;
+    autoRepeatInterval = 40;
+  };
+
 
   # Enable touchpad support.
   # services.xserver.libinput.enable = true;
@@ -148,7 +153,7 @@ in
   };
   #services.xserver.desktopManager.plasma5.enable = true;
   services.xserver.windowManager.bspwm.enable = true;
-  
+
   services.xserver.displayManager.defaultSession = "none+bspwm";
   services.xserver.displayManager.sessionCommands = ''
     ${pkgs.xorg.xset}/bin/xset r rate 200 40
@@ -159,7 +164,7 @@ in
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.mgsk = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "docker" ]; 
+    extraGroups = [ "wheel" "docker" ];
   };
 
   hardware.bluetooth.enable = true;
@@ -192,4 +197,3 @@ in
   system.stateVersion = "20.03"; # Did you read the comment?
 
 }
-

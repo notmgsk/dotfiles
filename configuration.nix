@@ -66,6 +66,7 @@ in
     ripgrep ispell
     htop tmux
     httpie
+    openconnect_pa
 
     nix-index
     direnv

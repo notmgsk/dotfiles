@@ -75,7 +75,7 @@ in
 
     (pkgs.callPackage ./sbcl.nix {})
     lispPackages.quicklisp
-    go
+    unstable.go
     python python3
     sqlite
     gcc

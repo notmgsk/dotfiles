@@ -65,7 +65,7 @@ in
     jq bc killall xorg.xbacklight
     ripgrep ispell
     htop tmux
-    httpie
+    httpie nmap nmap-graphical
     openconnect_pa
 
     nix-index

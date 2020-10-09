@@ -181,10 +181,6 @@ in
     ohMyZsh.theme = "robbyrussell";
   };
 
-  programs.zsh.interactiveShellInit = ''
-# Customize your oh-my-zsh options here
-
-'';
   programs.zsh.promptInit = ""; # Clear this to avoid a conflict with oh-my-zsh
 
   users.defaultUserShell = pkgs.zsh;

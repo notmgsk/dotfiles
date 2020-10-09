@@ -88,6 +88,9 @@ in
     # Desktop
     redshift bspwm sxhkd rofi polybar compton
     gnome3.adwaita-icon-theme
+
+    # Custom derivations/packages
+    (import ./rofi-bluetooth.nix)
   ];
 
   fonts = {

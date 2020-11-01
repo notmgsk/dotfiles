@@ -64,7 +64,7 @@ in
     evince # pdf reader
     jq bc killall xorg.xbacklight
     ripgrep ispell
-    htop tmux
+    htop unstable.bpytop tmux
     httpie nmap nmap-graphical
     openconnect_pa
 

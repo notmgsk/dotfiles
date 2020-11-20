@@ -55,7 +55,7 @@ in
   environment.systemPackages = with pkgs; [
     vim docker unstable.emacs
 
-    firefox slack spotify thunderbird gimp
+    firefox slack spotify gimp
 
     zsh oh-my-zsh zsh-autosuggestions zsh-fast-syntax-highlighting
     wget git

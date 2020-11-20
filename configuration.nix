@@ -69,6 +69,7 @@ in
     httpie nmap nmap-graphical
     unstable.openconnect
     #unstable.openconnect_pa
+    postgresql
     nix-index
     direnv
 

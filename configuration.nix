@@ -71,7 +71,16 @@ in
     #unstable.openconnect_pa
     postgresql
     nix-index
-    direnv
+
+    # direnv allows us to manage environments upon entering a
+    # directory, e.g. automatically enable a python
+    # environment. nix-direnv wraps direnv to make it faster on
+    # nixos. Make sure to have the line
+    #
+    #    source /run/current-system/sw/share/nix-direnv/direnvrc
+    #
+    # in ~/.direnvrc
+    direnv nix-direnv
 
     pavucontrol pasystray # audio stuff
 
@@ -93,6 +102,14 @@ in
 
     # Custom derivations/packages
     (import ./rofi-bluetooth.nix)
+  ];
+
+  nix.extraOptions = ''
+    keep-outputs = true
+    keep-derivations = true
+  '';
+  environment.pathsToLink = [
+    "/share/nix-direnv"
   ];
 
   fonts = {

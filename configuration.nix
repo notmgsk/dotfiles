@@ -67,8 +67,8 @@ in
     ripgrep ispell
     htop unstable.bpytop tmux
     httpie nmap nmap-graphical
-    openconnect_pa
-
+    unstable.openconnect
+    #unstable.openconnect_pa
     nix-index
     direnv
 

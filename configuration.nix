@@ -56,6 +56,7 @@ in
     vim docker unstable.emacs
 
     firefox slack spotify gimp
+    freecad
 
     zsh oh-my-zsh zsh-autosuggestions zsh-fast-syntax-highlighting
     wget git

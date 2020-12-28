@@ -23,7 +23,7 @@ alert = #bd2c40
 [bar/example]
 ;monitor = ${env:MONITOR:HDMI-1}
 width = 100%
-height = 50
+height = 70
 ;offset-x = 1%
 ;offset-y = 1%
 radius = 10
@@ -44,7 +44,7 @@ padding-right = 6
 module-margin-left = 1
 module-margin-right = 1
 
-font-0 = RobotoMono:size=12
+font-0 = RobotoMono:size=14
 font-1 = MaterialDesignIcons:size=16
 font-2 = Siji:pixelsize=10;1
 
@@ -56,7 +56,7 @@ modules-left = bspwm
 modules-center = 
 modules-right = filesystem volume memory cpu network battery temperature date
 
-tray-position = right
+tray-position = center
 tray-padding = 2
 ;tray-transparent = true
 ;tray-background = #0063ff

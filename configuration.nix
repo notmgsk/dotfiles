@@ -24,15 +24,20 @@ in
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.systemd-boot.consoleMode = "auto";
+  boot.extraModprobeConfig = ''
+    options nvidia "NVreg_RestrictProfilingToAdminUsers=0"
+  '';
 
-  networking.hostName = "mgsk.nixos"; # Define your hostname.
+  networking.hostName = "mgsk-nixos"; # Define your hostname.
   networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+
+  # TODO update to 20.09
+  #programs.steam.enable = true;
 
   # The global useDHCP flag is deprecated, therefore explicitly set to false here.
   # Per-interface useDHCP will be mandatory in the future, so this generated config
   # replicates the default behaviour.
   networking.useDHCP = false;
-  networking.interfaces.enp0s20f0u4u4.useDHCP = true;
   networking.interfaces.enp2s0.useDHCP = true;
   networking.interfaces.wlo1.useDHCP = true;
 
@@ -53,6 +58,8 @@ in
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+    pciutils cudatoolkit
+    
     vim docker unstable.emacs
 
     firefox slack spotify gimp
@@ -120,6 +127,8 @@ in
     };
     fonts = with pkgs; [
       iosevka
+      fira-code
+      fira-code-symbols
     ];
   };
 
@@ -140,8 +149,8 @@ in
   services.openssh.enable = true;
 
   # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
+  networking.firewall.allowedTCPPorts = [ 24800 ];
+  networking.firewall.allowedUDPPorts = [ 24800 ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
   # networking.networkmanager.enable = true;
@@ -158,11 +167,14 @@ in
     enable = true;
     dpi = 144;
     layout = "us";
-    xkbOptions = "ctrl:swapcaps";
+    # xkbOptions = "ctrl:swapcaps";
     autoRepeatDelay = 200;
     autoRepeatInterval = 40;
   };
 
+  # TODO
+  #hardware.fancontrol.enable = true;
+  #hardware.fancontrol.config = "";
 
   # Enable touchpad support.
   # services.xserver.libinput.enable = true;
@@ -182,7 +194,21 @@ in
     ${pkgs.xorg.xset}/bin/xset r rate 200 40
   '';
 
+  hardware.opengl = {
+    enable = true;
+    extraPackages = with pkgs; [
+      libGL
+    ];
+    setLdLibraryPath = true;
+  };
   services.xserver.videoDrivers = [ "nvidia" ];
+  services.xserver.screenSection = ''
+    Option "metamodes" "nvidia-auto-select +0+0 { ForceCompositionPipeline = On }"
+  '';
+  systemd.services.nvidia-control-devices = {
+    wantedBy = [ "multi-user.target" ];
+    serviceConfig.ExecStart = "${pkgs.linuxPackages_latest.nvidia_x11.bin}/bin/nvidia-smi";
+  };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.mgsk = {

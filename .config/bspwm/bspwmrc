@@ -36,7 +36,7 @@ case $HOSTNAME in
         ;;
 esac
 
-bspc monitor $monitor1 -d genrl hackr email chati readi
+bspc monitor $monitor1 -d misc hack mail chat read todo info
 
 # TODO This only configures the root node on each monitor. If I move a
 # node from one monitor to another, the node will keep the
